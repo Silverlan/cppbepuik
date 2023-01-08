@@ -17,6 +17,7 @@
 
 #include "bepuik/control/Control.hpp"
 #include "bepuik/Bone.hpp"
+#include <memory>
 
 namespace BEPUik
 {
@@ -27,6 +28,8 @@ namespace BEPUik
     /// </summary>
     class StateControl : public Control
     {
+	public:
+		virtual ~StateControl() override;
         /// <summary>
         /// Gets or sets the controlled bone.
         /// </summary>
@@ -37,16 +40,16 @@ namespace BEPUik
         /// <summary>
         /// Gets the linear motor used by the control.
         /// </summary>
-		SingleBoneLinearMotor *LinearMotor;
+		std::unique_ptr<SingleBoneLinearMotor> LinearMotor;
 		SingleBoneLinearMotor *GetLinearMotor();
-		void SetLinearMotor(SingleBoneLinearMotor *value);
+		void SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value);
 
         /// <summary>
         /// Gets the angular motor used by the control.
         /// </summary>
-		SingleBoneAngularMotor *AngularMotor;
+		std::unique_ptr<SingleBoneAngularMotor> AngularMotor;
 		SingleBoneAngularMotor *GetAngularMotor();
-		void SetAngularMotor(SingleBoneAngularMotor *value);
+		void SetAngularMotor(std::unique_ptr<SingleBoneAngularMotor> value);
 
         StateControl();
 

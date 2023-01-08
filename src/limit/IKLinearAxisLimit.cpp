@@ -15,14 +15,14 @@
 
 #include "bepuik/limit/IKLinearAxisLimit.hpp"
 
-BEPUik::Vector3 BEPUik::IKLinearAxisLimit::GetLineAnchor() const { return m_connectionA->Position + quaternion::Transform(LocalLineAnchor, m_connectionA->Orientation); }
-void BEPUik::IKLinearAxisLimit::SetLineAnchor(const Vector3 &value) { LocalLineAnchor = quaternion::Transform(value - m_connectionA->Position, BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
+BEPUik::Vector3 BEPUik::IKLinearAxisLimit::GetLineAnchor() const { return vector3::Add(m_connectionA->Position, quaternion::Transform(LocalLineAnchor, m_connectionA->Orientation)); }
+void BEPUik::IKLinearAxisLimit::SetLineAnchor(const Vector3 &value) { LocalLineAnchor = quaternion::Transform(vector3::Subtract(value, m_connectionA->Position), BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
 
 BEPUik::Vector3 BEPUik::IKLinearAxisLimit::GetLineDirection() const { return quaternion::Transform(LocalLineDirection, m_connectionA->Orientation); }
 void BEPUik::IKLinearAxisLimit::SetLineDirection(const Vector3 &value) { LocalLineDirection = quaternion::Transform(value, BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
 
-BEPUik::Vector3 BEPUik::IKLinearAxisLimit::GetAnchorB() const { return m_connectionB->Position + quaternion::Transform(LocalAnchorB, m_connectionB->Orientation); }
-void BEPUik::IKLinearAxisLimit::SetAnchorB(const Vector3 &value) { LocalAnchorB = quaternion::Transform(value - m_connectionB->Position, BEPUik::quaternion::Conjugate(m_connectionB->Orientation)); }
+BEPUik::Vector3 BEPUik::IKLinearAxisLimit::GetAnchorB() const { return vector3::Add(m_connectionB->Position, quaternion::Transform(LocalAnchorB, m_connectionB->Orientation)); }
+void BEPUik::IKLinearAxisLimit::SetAnchorB(const Vector3 &value) { LocalAnchorB = quaternion::Transform(vector3::Subtract(value, m_connectionB->Position), BEPUik::quaternion::Conjugate(m_connectionB->Orientation)); }
 
 float BEPUik::IKLinearAxisLimit::GetMinimumDistance() const { return minimumDistance; }
 void BEPUik::IKLinearAxisLimit::SetMinimumDistance(float value) { minimumDistance = value; }
@@ -30,7 +30,7 @@ void BEPUik::IKLinearAxisLimit::SetMinimumDistance(float value) { minimumDistanc
 float BEPUik::IKLinearAxisLimit::GetMaximumDistance() const { return maximumDistance; }
 void BEPUik::IKLinearAxisLimit::SetMaximumDistance(float value) { maximumDistance = value; }
 
-BEPUik::IKLinearAxisLimit::IKLinearAxisLimit(Bone connectionA, Bone connectionB, Vector3 lineAnchor, Vector3 lineDirection, Vector3 anchorB, float minimumDistance, float maximumDistance)
+BEPUik::IKLinearAxisLimit::IKLinearAxisLimit(Bone &connectionA, Bone &connectionB, const Vector3 &lineAnchor, const Vector3 &lineDirection, const Vector3 &anchorB, float minimumDistance, float maximumDistance)
     : IKLimit(connectionA, connectionB)
 {
     SetLineAnchor(lineAnchor);

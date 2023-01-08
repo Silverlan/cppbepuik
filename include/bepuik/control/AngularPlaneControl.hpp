@@ -16,6 +16,7 @@
 #pragma once
 
 #include "bepuik/control/Control.hpp"
+#include <memory>
 
 namespace BEPUik
 {
@@ -25,6 +26,8 @@ namespace BEPUik
     /// </summary>
     class AngularPlaneControl : public Control
     {
+	public:
+		virtual ~AngularPlaneControl() override;
         /// <summary>
         /// Gets or sets the controlled bone.
         /// </summary>
@@ -34,9 +37,9 @@ namespace BEPUik
         /// <summary>
         /// Gets or sets the linear motor used by the control.
         /// </summary>
-        SingleBoneAngularPlaneConstraint *AngularMotor;
+        std::unique_ptr<SingleBoneAngularPlaneConstraint> AngularMotor;
         SingleBoneAngularPlaneConstraint *GetAngularMotor();
-		void SetAngularMotor(SingleBoneAngularPlaneConstraint *value);
+		void SetAngularMotor(std::unique_ptr<SingleBoneAngularPlaneConstraint> value);
 
         AngularPlaneControl();
 

@@ -27,6 +27,9 @@ namespace BEPUik
     class Bone
     {
 	public:
+		Bone()=default;
+		Bone(const Bone&)=delete;
+		Bone &operator=(const Bone&)=delete;
         std::vector<IKJoint*> joints;
 
         /// <summary>
@@ -68,7 +71,7 @@ namespace BEPUik
         /// <summary>
         /// An arbitrary scaling factor is applied to the inertia tensor. This tends to improve stability.
         /// </summary>
-        static constexpr float InertiaTensorScaling = 2.5f;
+        float InertiaTensorScaling = 2.5f;
 
         /// <summary>
         /// Gets the list of joints affecting this bone.
@@ -114,6 +117,8 @@ namespace BEPUik
         /// </summary>
 		float GetHeight() const;
 		void SetHeight(float value);
+
+		void SetInertiaTensorScaling(float inertiaTensorScaling);
 
         /// <summary>
         /// Constructs a new bone.

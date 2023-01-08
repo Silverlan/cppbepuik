@@ -168,7 +168,7 @@ void BEPUik::IKJoint::SolveVelocityIteration()
     Vector3 preadd = accumulatedImpulse;
     accumulatedImpulse = vector3::Add(constraintSpaceImpulse, accumulatedImpulse);
     //But wait! The accumulated impulse may exceed this constraint's capacity! Check to make sure!
-    float impulseSquared = glm::length2(accumulatedImpulse);
+    float impulseSquared = vector3::LengthSqr(accumulatedImpulse);
     if (impulseSquared > MaximumImpulseSquared)
     {
         //Oops! Clamp that down.

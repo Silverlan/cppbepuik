@@ -21,6 +21,7 @@ namespace BEPUik
 {
     class IKSwivelHingeJoint : public IKJoint
     {
+	public:
         /// <summary>
         /// Gets or sets the free hinge axis attached to connection A in its local space.
         /// </summary>

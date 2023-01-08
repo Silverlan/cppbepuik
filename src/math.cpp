@@ -495,6 +495,11 @@ float BEPUik::matrix::AdaptiveDeterminant(const Matrix3x3 &matrix,int &subMatrix
 
 ///////////
 
+BEPUik::Vector3 BEPUik::vector3::Create()
+{
+	return Vector3{0.f,0.f,0.f};
+}
+
 BEPUik::Vector3 BEPUik::vector3::Add(const Vector3 &a, const Vector3 &b)
 {
 	return a +b;
@@ -558,7 +563,15 @@ BEPUik::Vector3 BEPUik::vector3::Max(const Vector3 &a, const Vector3 &b)
 	return result;
 }
 
+float BEPUik::vector3::Length(const Vector3 &v) {return glm::length(v);}
+float BEPUik::vector3::LengthSqr(const Vector3 &v) {return glm::length2(v);}
+
 ///////////
+
+BEPUik::Quaternion BEPUik::quaternion::Create(float x,float y,float z,float w)
+{
+	return Quaternion{w,x,y,z};
+}
 
 BEPUik::Vector3 BEPUik::quaternion::Transform(const Vector3 &v, const Quaternion &rotation)
 {

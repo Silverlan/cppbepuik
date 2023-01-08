@@ -21,6 +21,7 @@ namespace BEPUik
 {
     class IKRevoluteJoint : public IKJoint
     {
+	public:
         Vector3 localFreeAxisA;
         /// <summary>
         /// Gets or sets the free axis in connection A's local space.
@@ -64,7 +65,7 @@ namespace BEPUik
         /// <param name="connectionA">First entity connected in the orientation joint.</param>
         /// <param name="connectionB">Second entity connected in the orientation joint.</param>
         /// <param name="freeAxis">Axis allowed to rotate freely in world space.</param>
-        IKRevoluteJoint(Bone connectionA, Bone connectionB, Vector3 freeAxis);
+        IKRevoluteJoint(Bone &connectionA, Bone &connectionB, const Vector3 &freeAxis);
 
         virtual void UpdateJacobiansAndVelocityBias() override;
     };

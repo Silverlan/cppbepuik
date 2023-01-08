@@ -28,8 +28,6 @@ namespace BEPUik
 	using Vector2 = glm::vec2;
 	using Matrix3x3 = glm::mat3;
 
-	constexpr Quaternion quat_identity {1.f,0.f,0.f,0.f};
-
 	/// <summary>
 	/// Threshold value used for floating point comparisons.
 	/// </summary>
@@ -272,24 +270,29 @@ namespace BEPUik
 		/// <param name="result">Vector with the larger components of each input vector.</param>
 		Vector3 Max(const Vector3 &a, const Vector3 &b);
 
+		float Length(const Vector3 &v);
+		float LengthSqr(const Vector3 &v);
+
 		/// <summary>
 		/// Vector pointing in the up direction.
 		/// </summary>
-		static constexpr Vector3 Up = Vector3(0, 1, 0);
+		const Vector3 Up = Vector3(0, 1, 0);
 
 		/// <summary>
 		/// Vector pointing in the right direction.
 		/// </summary>
-		static constexpr Vector3 Right = Vector3(1, 0, 0);
+		const Vector3 Right = Vector3(1, 0, 0);
 
 		/// <summary>
 		/// Vector with all components equal to zero.
 		/// </summary>
-		static constexpr Vector3 Zero = Vector3(0,0,0);
+		const Vector3 Zero = Vector3(0,0,0);
 	};
 
 	namespace quaternion
 	{
+		Quaternion Create(float x,float y,float z,float w);
+
 		/// <summary>
 		/// Transforms the vector using a quaternion.
 		/// </summary>
@@ -350,4 +353,6 @@ namespace BEPUik
 		/// <param name="result">Sum of the addition.</param>
 		Quaternion Add(const Quaternion &a, const Quaternion &b);
 	};
+
+	const Quaternion quat_identity = quaternion::Create(1.f,0.f,0.f,0.f);
 };

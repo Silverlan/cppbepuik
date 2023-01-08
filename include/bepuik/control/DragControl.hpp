@@ -16,6 +16,7 @@
 #pragma once
 
 #include "bepuik/control/Control.hpp"
+#include <memory>
 
 namespace BEPUik
 {
@@ -25,6 +26,8 @@ namespace BEPUik
     /// </summary>
     class DragControl : public Control
     {
+	public:
+		virtual ~DragControl() override;
         /// <summary>
         /// Gets or sets the controlled bone.
         /// </summary>
@@ -34,9 +37,9 @@ namespace BEPUik
         /// <summary>
         /// Gets or sets the linear motor used by the control.
         /// </summary>
-        SingleBoneLinearMotor *LinearMotor;
+        std::unique_ptr<SingleBoneLinearMotor> LinearMotor;
 		SingleBoneLinearMotor *GetLinearMotor();
-		void SetLinearMotor(SingleBoneLinearMotor *value);
+		void SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value);
 
         DragControl();
 

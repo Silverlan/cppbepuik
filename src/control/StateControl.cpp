@@ -17,6 +17,7 @@
 #include "bepuik/SingleBoneLinearMotor.hpp"
 #include "bepuik/SingleBoneAngularMotor.hpp"
 
+BEPUik::StateControl::~StateControl() {}
 BEPUik::Bone *BEPUik::StateControl::GetTargetBone() {return LinearMotor->TargetBone;}
 
 void BEPUik::StateControl::SetTargetBone(Bone *value)
@@ -27,16 +28,16 @@ void BEPUik::StateControl::SetTargetBone(Bone *value)
         AngularMotor->TargetOrientation = value->Orientation;
 }
 
-BEPUik::SingleBoneLinearMotor *BEPUik::StateControl::GetLinearMotor() {return LinearMotor;}
-void BEPUik::StateControl::SetLinearMotor(SingleBoneLinearMotor *value) {LinearMotor = value;}
+BEPUik::SingleBoneLinearMotor *BEPUik::StateControl::GetLinearMotor() {return LinearMotor.get();}
+void BEPUik::StateControl::SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value) {LinearMotor = std::move(value);}
 
-BEPUik::SingleBoneAngularMotor *BEPUik::StateControl::GetAngularMotor() {return AngularMotor;}
-void BEPUik::StateControl::SetAngularMotor(SingleBoneAngularMotor *value) {AngularMotor = value;}
+BEPUik::SingleBoneAngularMotor *BEPUik::StateControl::GetAngularMotor() {return AngularMotor.get();}
+void BEPUik::StateControl::SetAngularMotor(std::unique_ptr<SingleBoneAngularMotor> value) {AngularMotor = std::move(value);}
 
 BEPUik::StateControl::StateControl()
 {
-    LinearMotor = new SingleBoneLinearMotor();
-    AngularMotor = new SingleBoneAngularMotor();
+    LinearMotor = std::make_unique<SingleBoneLinearMotor>();
+    AngularMotor = std::make_unique<SingleBoneAngularMotor>();
     LinearMotor->Rigidity = 1;
     AngularMotor->Rigidity = 1;
 }

@@ -27,6 +27,10 @@ namespace BEPUik
     class Control
     {
 	public:
+		Control()=default;
+		Control(const Control*)=delete;
+		Control &operator=(const Control&)=delete;
+		virtual ~Control() {}
         /// <summary>
         /// Gets or sets the controlled bone.
         /// </summary>

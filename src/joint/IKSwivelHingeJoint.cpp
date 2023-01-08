@@ -51,7 +51,7 @@ void BEPUik::IKSwivelHingeJoint::UpdateJacobiansAndVelocityBias()
     Vector3 restrictedAxis;
     restrictedAxis = vector3::Cross(worldHingeAxis, worldTwistAxis);
     //Attempt to normalize the restricted axis.
-    float lengthSquared = glm::length2(restrictedAxis);
+    float lengthSquared = vector3::LengthSqr(restrictedAxis);
     if (lengthSquared > Epsilon)
     {
         restrictedAxis = vector3::Divide(restrictedAxis, (float)std::sqrt(lengthSquared));

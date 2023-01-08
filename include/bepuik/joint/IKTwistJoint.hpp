@@ -24,6 +24,7 @@ namespace BEPUik
     /// </summary>
     class IKTwistJoint : public IKJoint
     {
+	public:
         /// <summary>
         /// Gets or sets the axis attached to ConnectionA in its local space.
         /// Must be unit length and perpendicular to LocalMeasurementAxisA.

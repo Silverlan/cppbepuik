@@ -35,8 +35,8 @@ void BEPUik::IKBallSocketJoint::SetOffsetB(const Vector3 &value) {
 BEPUik::IKBallSocketJoint::IKBallSocketJoint(Bone &connectionA, Bone &connectionB, const Vector3 &anchor)
     : IKJoint(connectionA, connectionB)
 {
-    LocalOffsetA = anchor - m_connectionA->Position;
-    LocalOffsetB = anchor - m_connectionB->Position;
+    SetOffsetA(vector3::Subtract(anchor, m_connectionA->Position));
+    SetOffsetB(vector3::Subtract(anchor, m_connectionB->Position));
 }
 
 void BEPUik::IKBallSocketJoint::UpdateJacobiansAndVelocityBias()

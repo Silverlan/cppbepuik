@@ -16,18 +16,20 @@
 #include "bepuik/control/DragControl.hpp"
 #include "bepuik/SingleBoneLinearMotor.hpp"
 
+BEPUik::DragControl::~DragControl()
+{}
 BEPUik::Bone *BEPUik::DragControl::GetTargetBone() { return LinearMotor->TargetBone; }
 void BEPUik::DragControl::SetTargetBone(Bone *value)
 {
     LinearMotor->TargetBone = value;
 }
 
-BEPUik::SingleBoneLinearMotor *BEPUik::DragControl::GetLinearMotor() {return LinearMotor;}
-void BEPUik::DragControl::SetLinearMotor(SingleBoneLinearMotor *value) {LinearMotor = value;}
+BEPUik::SingleBoneLinearMotor *BEPUik::DragControl::GetLinearMotor() {return LinearMotor.get();}
+void BEPUik::DragControl::SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value) {LinearMotor = std::move(value);}
 
 BEPUik::DragControl::DragControl()
 {
-    LinearMotor = new SingleBoneLinearMotor();
+    LinearMotor = std::make_unique<SingleBoneLinearMotor>();
     LinearMotor->Rigidity = 1;
 }
 

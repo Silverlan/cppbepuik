@@ -35,7 +35,7 @@ void BEPUik::IKTwistJoint::ComputeMeasurementAxes()
     //Pick an axis perpendicular to axisA to use as the measurement axis.
     Vector3 worldMeasurementAxisA;
     worldMeasurementAxisA = vector3::Cross(vector3::Up, axisA);
-    float lengthSquared = glm::length2(worldMeasurementAxisA);
+    float lengthSquared = vector3::LengthSqr(worldMeasurementAxisA);
     if (lengthSquared > Epsilon)
     {
         worldMeasurementAxisA = vector3::Divide(worldMeasurementAxisA, (float)std::sqrt(lengthSquared));
@@ -107,7 +107,7 @@ void BEPUik::IKTwistJoint::UpdateJacobiansAndVelocityBias()
     //We can't just use the axes directly as jacobians. Consider 'cranking' one object around the other.
     Vector3 jacobian;
     jacobian = vector3::Add(axisA, axisB);
-    float lengthSquared = glm::length2(jacobian);
+    float lengthSquared = vector3::LengthSqr(jacobian);
     if (lengthSquared > Epsilon)
     {
         jacobian = vector3::Divide(jacobian, (float)std::sqrt(lengthSquared));

@@ -14,6 +14,7 @@
 // limitations under the License.
 
 #include "bepuik/IKSolver.hpp"
+#include <cassert>
 
 BEPUik::IKSolver::IKSolver()
 {}
@@ -119,8 +120,9 @@ void BEPUik::IKSolver::Solve(std::vector<Control*> &controls)
 
 		for(auto *control : controls)
         {
-            if (control->GetTargetBone()->Pinned)
-                throw new std::runtime_error("Pinned objects cannot be moved by controls.");
+			assert(!control->GetTargetBone()->Pinned);
+            //if (control->GetTargetBone()->Pinned)
+            //    throw std::runtime_error("Pinned objects cannot be moved by controls.");
             control->UpdateJacobiansAndVelocityBias();
             control->ComputeEffectiveMass();
             control->WarmStart();

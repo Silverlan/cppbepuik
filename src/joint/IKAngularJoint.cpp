@@ -19,7 +19,7 @@ BEPUik::IKAngularJoint::IKAngularJoint(Bone &connectionA, Bone &connectionB)
     : IKJoint(connectionA, connectionB)
 {  
     Quaternion orientationAConjugate;
-	orientationAConjugate = glm::conjugate(m_connectionA->Orientation);
+	orientationAConjugate = quaternion::Conjugate(m_connectionA->Orientation);
     //Store the orientation from A to B in A's local space in the GoalRelativeOrientation.
     GoalRelativeOrientation = quaternion::Concatenate(m_connectionB->Orientation, orientationAConjugate);
 

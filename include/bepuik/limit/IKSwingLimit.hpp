@@ -24,6 +24,7 @@ namespace BEPUik
     /// </summary>
     class IKSwingLimit : public IKLimit
     {
+	public:
         /// <summary>
         /// Gets or sets the axis attached to ConnectionA in its local space.
         /// </summary>

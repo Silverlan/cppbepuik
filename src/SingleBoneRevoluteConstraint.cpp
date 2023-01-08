@@ -21,11 +21,11 @@ void BEPUik::SingleBoneRevoluteConstraint::SetFreeAxis(const Vector3 &value)
 {
     freeAxis = value;
     constrainedAxis1 = vector3::Cross(freeAxis, vector3::Up);
-    if (glm::length2(constrainedAxis1) < Epsilon)
+    if (vector3::LengthSqr(constrainedAxis1) < Epsilon)
     {
         constrainedAxis1 = vector3::Cross(freeAxis, vector3::Right);
     }
-    constrainedAxis1 = glm::normalize(constrainedAxis1);
+    vector3::Normalize(constrainedAxis1);
     constrainedAxis2 = vector3::Cross(freeAxis, constrainedAxis1);
 }
 

@@ -23,7 +23,7 @@ void BEPUik::ActiveSet::SetAutomassUnstressedFalloff(float value)
 void BEPUik::ActiveSet::SetAutomassTarget(float value)
 {
     if (value <= 0)
-        throw new std::invalid_argument("Mass must be positive.");
+        throw std::invalid_argument("Mass must be positive.");
     AutomassTarget = value;
 }
 

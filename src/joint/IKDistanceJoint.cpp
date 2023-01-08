@@ -16,17 +16,17 @@
 #include "bepuik/joint/IKDistanceJoint.hpp"
 
 BEPUik::Vector3 BEPUik::IKDistanceJoint::GetAnchorA() {
-	return m_connectionA->Position + quaternion::Transform(LocalAnchorA, m_connectionA->Orientation);
+	return vector3::Add(m_connectionA->Position, quaternion::Transform(LocalAnchorA, m_connectionA->Orientation));
 }
 void BEPUik::IKDistanceJoint::SetAnchorA(const Vector3 &value) {
-	LocalAnchorA = quaternion::Transform(value - m_connectionA->Position, BEPUik::quaternion::Conjugate(m_connectionA->Orientation));
+	LocalAnchorA = quaternion::Transform(vector3::Subtract(value, m_connectionA->Position), BEPUik::quaternion::Conjugate(m_connectionA->Orientation));
 }
 
 BEPUik::Vector3 BEPUik::IKDistanceJoint::GetAnchorB() {
-	return m_connectionB->Position + quaternion::Transform(LocalAnchorB, m_connectionB->Orientation);
+	return vector3::Add(m_connectionB->Position, quaternion::Transform(LocalAnchorB, m_connectionB->Orientation));
 }
 void BEPUik::IKDistanceJoint::SetAnchorB(const Vector3 &value) {
-	LocalAnchorB = quaternion::Transform(value - m_connectionB->Position, BEPUik::quaternion::Conjugate(m_connectionB->Orientation));
+	LocalAnchorB = quaternion::Transform(vector3::Subtract(value, m_connectionB->Position), BEPUik::quaternion::Conjugate(m_connectionB->Orientation));
 }
 
 float BEPUik::IKDistanceJoint::GetDistance() const { return distance; }
@@ -37,7 +37,7 @@ BEPUik::IKDistanceJoint::IKDistanceJoint(Bone &connectionA, Bone &connectionB, c
 {
 	SetAnchorA(anchorA);
 	SetAnchorB(anchorB);
-    distance = vector3::Distance(anchorA, anchorB);
+    SetDistance(vector3::Distance(anchorA, anchorB));
 }
 
 void BEPUik::IKDistanceJoint::UpdateJacobiansAndVelocityBias()
@@ -50,7 +50,7 @@ void BEPUik::IKDistanceJoint::UpdateJacobiansAndVelocityBias()
 
     //Compute the distance.
     Vector3 separation = vector3::Subtract(anchorB, anchorA);
-    float currentDistance = glm::length(separation);
+    float currentDistance = vector3::Length(separation);
 
     //Compute jacobians
 	Vector3 linearA = vector3::Create();

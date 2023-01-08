@@ -26,6 +26,7 @@ namespace BEPUik
     {
 	public:
         IKLimit(Bone &connectionA, Bone &connectionB);
+		virtual ~IKLimit() {};
 
         virtual void SolveVelocityIteration() override;
 

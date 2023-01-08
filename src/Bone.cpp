@@ -43,6 +43,12 @@ void BEPUik::Bone::SetRadius(float value)
     ComputeLocalInertiaTensor();
 }
 
+void BEPUik::Bone::SetInertiaTensorScaling(float newInertiaTensorScaling)
+{
+	InertiaTensorScaling = newInertiaTensorScaling;
+	ComputeLocalInertiaTensor();
+}
+
 float BEPUik::Bone::GetHalfHeight() const {return HalfHeight;}
 void BEPUik::Bone::SetHalfHeight(float value)
 {
@@ -102,7 +108,7 @@ void BEPUik::Bone::UpdatePosition()
     //Update the orientation based on the angular velocity.
     Vector3 increment;
     increment = vector3::Multiply(angularVelocity, .5f);
-    Quaternion multiplier = Quaternion(0.f, increment.x, increment.y, increment.z);
+    Quaternion multiplier = quaternion::Create(increment.x, increment.y, increment.z,0.f);
     multiplier = BEPUik::quaternion::Multiply(multiplier, Orientation);
     Orientation = quaternion::Add(Orientation, multiplier);
     quaternion::Normalize(Orientation);

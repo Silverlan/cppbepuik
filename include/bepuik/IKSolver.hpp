@@ -33,7 +33,9 @@ namespace BEPUik
     /// </summary>
     class IKSolver
     {
-
+	public:
+		IKSolver(const IKSolver*)=delete;
+		IKSolver &operator=(const IKSolver&)=delete;
         /// <summary>
         /// Gets the active joint set associated with the solver.
         /// </summary>
@@ -72,7 +74,7 @@ namespace BEPUik
         void SetTimeStepDuration(float value)
         {
             if (value <= 0)
-                throw new std::invalid_argument("Time step duration must be positive.");
+                throw std::invalid_argument("Time step duration must be positive.");
             timeStepDuration = value;
         }
 

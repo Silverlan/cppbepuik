@@ -23,10 +23,10 @@ void BEPUik::IKPointOnLineJoint::SetLocalLineDirection(const Vector3 &value)
 }
 
 BEPUik::Vector3 BEPUik::IKPointOnLineJoint::GetLineAnchor() {
-	return m_connectionA->Position + quaternion::Transform(LocalLineAnchor, m_connectionA->Orientation);
+	return vector3::Add(m_connectionA->Position, quaternion::Transform(LocalLineAnchor, m_connectionA->Orientation));
 }
 void BEPUik::IKPointOnLineJoint::SetLineAnchor(const Vector3 &value) {
-	LocalLineAnchor = quaternion::Transform(value - m_connectionA->Position, BEPUik::quaternion::Conjugate(m_connectionA->Orientation));
+	LocalLineAnchor = quaternion::Transform(vector3::Subtract(value, m_connectionA->Position), BEPUik::quaternion::Conjugate(m_connectionA->Orientation));
 }
 
 BEPUik::Vector3 BEPUik::IKPointOnLineJoint::GetLineDirection() const {
@@ -37,17 +37,17 @@ void BEPUik::IKPointOnLineJoint::SetLineDirection(const Vector3 &value) {
 }
 
 BEPUik::Vector3 BEPUik::IKPointOnLineJoint::GetAnchorB() {
-	return m_connectionB->Position + quaternion::Transform(LocalAnchorB, m_connectionB->Orientation);
+	return vector3::Add(m_connectionB->Position, quaternion::Transform(LocalAnchorB, m_connectionB->Orientation));
 }
 void BEPUik::IKPointOnLineJoint::SetAnchorB(const Vector3 &value) {
-	LocalAnchorB = quaternion::Transform(value - m_connectionB->Position, BEPUik::quaternion::Conjugate(m_connectionB->Orientation));
+	LocalAnchorB = quaternion::Transform(vector3::Subtract(value, m_connectionB->Position), BEPUik::quaternion::Conjugate(m_connectionB->Orientation));
 }
 
 void BEPUik::IKPointOnLineJoint::ComputeRestrictedAxes()
 {
 	Vector3 cross;
 	cross = vector3::Cross(localLineDirection, vector3::Up);
-	float lengthSquared = glm::length2(cross);
+	float lengthSquared = vector3::LengthSqr(cross);
 	if (lengthSquared > Epsilon)
 	{
 		localRestrictedAxis1 = vector3::Divide(cross, (float)std::sqrt(lengthSquared));

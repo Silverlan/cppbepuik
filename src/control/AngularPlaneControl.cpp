@@ -16,17 +16,19 @@
 #include "bepuik/control/AngularPlaneControl.hpp"
 #include "bepuik/SingleBoneAngularPlaneConstraint.hpp"
 
+BEPUik::AngularPlaneControl::~AngularPlaneControl()
+{}
 BEPUik::Bone *BEPUik::AngularPlaneControl::GetTargetBone() {return AngularMotor->TargetBone;}
 void BEPUik::AngularPlaneControl::SetTargetBone(Bone *value) {
 	AngularMotor->TargetBone = value;
 }
 
-BEPUik::SingleBoneAngularPlaneConstraint *BEPUik::AngularPlaneControl::GetAngularMotor() {return AngularMotor;}
-void BEPUik::AngularPlaneControl::SetAngularMotor(SingleBoneAngularPlaneConstraint *value) {AngularMotor = value;}
+BEPUik::SingleBoneAngularPlaneConstraint *BEPUik::AngularPlaneControl::GetAngularMotor() {return AngularMotor.get();}
+void BEPUik::AngularPlaneControl::SetAngularMotor(std::unique_ptr<SingleBoneAngularPlaneConstraint> value) {AngularMotor = std::move(value);}
 
 BEPUik::AngularPlaneControl::AngularPlaneControl()
 {
-    AngularMotor = new SingleBoneAngularPlaneConstraint();
+    AngularMotor = std::make_unique<SingleBoneAngularPlaneConstraint>();
     AngularMotor->Rigidity = 1;
 }
 

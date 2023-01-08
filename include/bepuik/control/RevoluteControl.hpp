@@ -16,6 +16,7 @@
 #pragma once
 
 #include "bepuik/control/Control.hpp"
+#include <memory>
 
 namespace BEPUik
 {
@@ -25,6 +26,8 @@ namespace BEPUik
     /// </summary>
     class RevoluteControl : public Control
     {
+	public:
+		virtual ~RevoluteControl() override;
         /// <summary>
         /// Gets or sets the controlled bone.
         /// </summary>
@@ -34,9 +37,9 @@ namespace BEPUik
         /// <summary>
         /// Gets or sets the linear motor used by the control.
         /// </summary>
-        SingleBoneRevoluteConstraint *AngularMotor;
+        std::unique_ptr<SingleBoneRevoluteConstraint> AngularMotor;
 		SingleBoneRevoluteConstraint *GetAngularMotor();
-		void SetAngularMotor(SingleBoneRevoluteConstraint *value);
+		void SetAngularMotor(std::unique_ptr<SingleBoneRevoluteConstraint> value);
 
         RevoluteControl();
 

@@ -15,14 +15,14 @@
 
 #include "bepuik/joint/IKPointOnPlaneJoint.hpp"
 
-BEPUik::Vector3 BEPUik::IKPointOnPlaneJoint::GetPlaneAnchor() const { return m_connectionA->Position + quaternion::Transform(LocalPlaneAnchor, m_connectionA->Orientation); }
-void BEPUik::IKPointOnPlaneJoint::SetPlaneAnchor(const Vector3 &value) { LocalPlaneAnchor = quaternion::Transform(value - m_connectionA->Position, BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
+BEPUik::Vector3 BEPUik::IKPointOnPlaneJoint::GetPlaneAnchor() const { return vector3::Add(m_connectionA->Position, quaternion::Transform(LocalPlaneAnchor, m_connectionA->Orientation)); }
+void BEPUik::IKPointOnPlaneJoint::SetPlaneAnchor(const Vector3 &value) { LocalPlaneAnchor = quaternion::Transform(vector3::Subtract(value, m_connectionA->Position), BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
 
 BEPUik::Vector3 BEPUik::IKPointOnPlaneJoint::GetPlaneNormal() const { return quaternion::Transform(LocalPlaneNormal, m_connectionA->Orientation); }
 void BEPUik::IKPointOnPlaneJoint::SetPlaneNormal(const Vector3 &value) { LocalPlaneNormal = quaternion::Transform(value, BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
 
-BEPUik::Vector3 BEPUik::IKPointOnPlaneJoint::GetAnchorB() const { return m_connectionB->Position + quaternion::Transform(LocalAnchorB, m_connectionB->Orientation); }
-void BEPUik::IKPointOnPlaneJoint::SetAnchorB(const Vector3 &value) { LocalAnchorB = quaternion::Transform(value - m_connectionB->Position, BEPUik::quaternion::Conjugate(m_connectionB->Orientation)); }
+BEPUik::Vector3 BEPUik::IKPointOnPlaneJoint::GetAnchorB() const { return vector3::Add(m_connectionB->Position, quaternion::Transform(LocalAnchorB, m_connectionB->Orientation)); }
+void BEPUik::IKPointOnPlaneJoint::SetAnchorB(const Vector3 &value) { LocalAnchorB = quaternion::Transform(vector3::Subtract(value, m_connectionB->Position), BEPUik::quaternion::Conjugate(m_connectionB->Orientation)); }
 
 BEPUik::IKPointOnPlaneJoint::IKPointOnPlaneJoint(Bone &connectionA, Bone &connectionB, const Vector3 &planeAnchor, const Vector3 &planeNormal, const Vector3 &anchorB)
     : IKJoint(connectionA, connectionB)

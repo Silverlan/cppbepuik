@@ -24,6 +24,10 @@ namespace BEPUik
 	class IKConstraint
 	{
 	public:
+		IKConstraint()=default;
+		IKConstraint(const IKConstraint*)=delete;
+		IKConstraint &operator=(const IKConstraint&)=delete;
+		virtual ~IKConstraint() {}
         float softness;
 
         float errorCorrectionFactor;

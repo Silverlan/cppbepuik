@@ -24,6 +24,7 @@ namespace BEPUik
     /// </summary>
     class IKLinearAxisLimit : public IKLimit
     {
+	public:
         /// <summary>
         /// Gets or sets the offset in connection A's local space from the center of mass to the anchor point of the line.
         /// </summary>
@@ -83,7 +84,7 @@ namespace BEPUik
         /// <param name="anchorB">Anchor point on the second bone in world space which is measured against the other connection's anchor.</param>
         /// <param name="minimumDistance">Minimum distance that the joint connections should be kept from each other along the axis.</param>
         /// <param name="maximumDistance">Maximum distance that the joint connections should be kept from each other along the axis.</param>
-        IKLinearAxisLimit(Bone connectionA, Bone connectionB, Vector3 lineAnchor, Vector3 lineDirection, Vector3 anchorB, float minimumDistance, float maximumDistance);
+        IKLinearAxisLimit(Bone &connectionA, Bone &connectionB, const Vector3 &lineAnchor, const Vector3 &lineDirection, const Vector3 &anchorB, float minimumDistance, float maximumDistance);
 
         virtual void UpdateJacobiansAndVelocityBias() override;
     };

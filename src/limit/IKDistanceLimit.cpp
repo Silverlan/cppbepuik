@@ -16,11 +16,11 @@
 #include "bepuik/limit/IKDistanceLimit.hpp"
 #include <algorithm>
 
-BEPUik::Vector3 BEPUik::IKDistanceLimit::GetAnchorA() const { return m_connectionA->Position + quaternion::Transform(LocalAnchorA, m_connectionA->Orientation); }
-void BEPUik::IKDistanceLimit::SetAnchorA(const Vector3 &value) { LocalAnchorA = quaternion::Transform(value - m_connectionA->Position, BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
+BEPUik::Vector3 BEPUik::IKDistanceLimit::GetAnchorA() const { return vector3::Add(m_connectionA->Position, quaternion::Transform(LocalAnchorA, m_connectionA->Orientation)); }
+void BEPUik::IKDistanceLimit::SetAnchorA(const Vector3 &value) { LocalAnchorA = quaternion::Transform(vector3::Subtract(value, m_connectionA->Position), BEPUik::quaternion::Conjugate(m_connectionA->Orientation)); }
 
-BEPUik::Vector3 BEPUik::IKDistanceLimit::GetAnchorB() const { return m_connectionB->Position + quaternion::Transform(LocalAnchorB, m_connectionB->Orientation); }
-void BEPUik::IKDistanceLimit::SetAnchorB(const Vector3 &value) { LocalAnchorB = quaternion::Transform(value - m_connectionB->Position, BEPUik::quaternion::Conjugate(m_connectionB->Orientation)); }
+BEPUik::Vector3 BEPUik::IKDistanceLimit::GetAnchorB() const { return vector3::Add(m_connectionB->Position, quaternion::Transform(LocalAnchorB, m_connectionB->Orientation)); }
+void BEPUik::IKDistanceLimit::SetAnchorB(const Vector3 &value) { LocalAnchorB = quaternion::Transform(vector3::Subtract(value, m_connectionB->Position), BEPUik::quaternion::Conjugate(m_connectionB->Orientation)); }
 
 float BEPUik::IKDistanceLimit::GetMinimumDistance() const { return MinimumDistance; }
 void BEPUik::IKDistanceLimit::SetMinimumDistance(float value) { MinimumDistance = std::max(0.f, value); }
@@ -50,7 +50,7 @@ void BEPUik::IKDistanceLimit::UpdateJacobiansAndVelocityBias()
     //Compute the distance.
     Vector3 separation;
     separation = vector3::Subtract(anchorB, anchorA);
-    float currentDistance = glm::length(separation);
+    float currentDistance = vector3::Length(separation);
 
     //Compute jacobians
     Vector3 linearA = vector3::Create();

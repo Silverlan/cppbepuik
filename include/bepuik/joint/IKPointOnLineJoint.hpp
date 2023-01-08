@@ -24,6 +24,7 @@ namespace BEPUik
     /// </summary>
     class IKPointOnLineJoint : public IKJoint
     {
+	public:
         /// <summary>
         /// Gets or sets the offset in connection A's local space from the center of mass to the anchor point of the line.
         /// </summary>

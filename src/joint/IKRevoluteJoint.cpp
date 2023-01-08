@@ -45,7 +45,7 @@ void BEPUik::IKRevoluteJoint::ComputeConstrainedAxes()
 {
     Vector3 worldAxisA = GetWorldFreeAxisA();
     Vector3 error = vector3::Cross(worldAxisA, GetWorldFreeAxisB());
-    float lengthSquared = glm::length2(error);
+    float lengthSquared = vector3::LengthSqr(error);
     Vector3 worldConstrainedAxis1, worldConstrainedAxis2;
     //Find the first constrained axis.
     if (lengthSquared > Epsilon)
@@ -58,7 +58,7 @@ void BEPUik::IKRevoluteJoint::ComputeConstrainedAxes()
         //There's not enough error for it to be a good constrained axis.
         //We'll need to create the constrained axes arbitrarily.
         worldConstrainedAxis1 = vector3::Cross(vector3::Up, worldAxisA);
-        lengthSquared = glm::length2(worldConstrainedAxis1);
+        lengthSquared = vector3::LengthSqr(worldConstrainedAxis1);
         if (lengthSquared > Epsilon)
         {
             //The up vector worked!
@@ -78,7 +78,7 @@ void BEPUik::IKRevoluteJoint::ComputeConstrainedAxes()
     localConstrainedAxis2 = quaternion::Transform(worldConstrainedAxis2, BEPUik::quaternion::Conjugate(m_connectionA->Orientation));
 }
 
-BEPUik::IKRevoluteJoint::IKRevoluteJoint(Bone connectionA, Bone connectionB, Vector3 freeAxis)
+BEPUik::IKRevoluteJoint::IKRevoluteJoint(Bone &connectionA, Bone &connectionB, const Vector3 &freeAxis)
     : IKJoint(connectionA, connectionB)
 {
     SetWorldFreeAxisA(freeAxis);

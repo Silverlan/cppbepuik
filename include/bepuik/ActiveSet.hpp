@@ -31,6 +31,9 @@ namespace BEPUik
     class ActiveSet
     {
 	public:
+		ActiveSet()=default;
+		ActiveSet(const ActiveSet&)=delete;
+		ActiveSet &operator=(const ActiveSet&)=delete;
         std::vector<IKJoint*> joints;
 		
         std::vector<Bone*> bones;

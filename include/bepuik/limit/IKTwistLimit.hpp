@@ -24,6 +24,7 @@ namespace BEPUik
     /// </summary>
     class IKTwistLimit : public IKLimit
     {
+	public:
         /// <summary>
         /// Gets or sets the axis attached to ConnectionA in its local space.
         /// Must be unit length and perpendicular to LocalMeasurementAxisA.
@@ -98,7 +99,7 @@ namespace BEPUik
         /// <param name="axisA">Axis attached to connectionA in world space.</param>
         /// <param name="axisB">Axis attached to connectionB in world space.</param>
         /// <param name="maximumAngle">Maximum angle allowed between connectionA's axis and connectionB's axis.</param>
-        IKTwistLimit(Bone connectionA, Bone connectionB, Vector3 axisA, Vector3 axisB, float maximumAngle);
+        IKTwistLimit(Bone &connectionA, Bone &connectionB, const Vector3 &axisA, const Vector3 &axisB, float maximumAngle);
 
         virtual void UpdateJacobiansAndVelocityBias() override;
     };

@@ -13,21 +13,22 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "bepuik/RevoluteControl.hpp"
+#include "bepuik/control/RevoluteControl.hpp"
 #include "bepuik/SingleBoneRevoluteConstraint.hpp"
 
+BEPUik::RevoluteControl::~RevoluteControl() {}
 BEPUik::Bone *BEPUik::RevoluteControl::GetTargetBone() { return AngularMotor->TargetBone; }
 void BEPUik::RevoluteControl::SetTargetBone(Bone *value)
 {
     AngularMotor->TargetBone = value;
 }
 
-BEPUik::SingleBoneRevoluteConstraint *BEPUik::RevoluteControl::GetAngularMotor() {return AngularMotor;}
-void BEPUik::RevoluteControl::SetAngularMotor(SingleBoneRevoluteConstraint *value) {AngularMotor = value;}
+BEPUik::SingleBoneRevoluteConstraint *BEPUik::RevoluteControl::GetAngularMotor() {return AngularMotor.get();}
+void BEPUik::RevoluteControl::SetAngularMotor(std::unique_ptr<SingleBoneRevoluteConstraint> value) {AngularMotor = std::move(value);}
 
 BEPUik::RevoluteControl::RevoluteControl()
 {
-    AngularMotor = new SingleBoneRevoluteConstraint();
+    AngularMotor = std::make_unique<SingleBoneRevoluteConstraint>();
     AngularMotor->Rigidity = 1;
 }
 
