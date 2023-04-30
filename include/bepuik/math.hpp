@@ -82,7 +82,7 @@ namespace BEPUik
 		/// <param name="matrix">Matrix to scale.</param>
 		/// <param name="scale">Amount to scale.</param>
 		/// <param name="result">Scaled matrix.</param>
-		Matrix3x3 Multiply(const Matrix3x3 &a, const Matrix3x3 &b);
+		Matrix3x3 Multiply(const Matrix3x3& a, const Matrix3x3& b);
 
 		/// <summary>
 		/// Multiplies a matrix with a transposed matrix.
@@ -90,7 +90,7 @@ namespace BEPUik
 		/// <param name="matrix">Matrix to be multiplied.</param>
 		/// <param name="transpose">Matrix to be transposed and multiplied.</param>
 		/// <param name="result">Product of the multiplication.</param>
-		Matrix3x3 MultiplyByTransposed(const Matrix3x3 &matrix, const Matrix3x3 &transpose);
+		Matrix3x3 MultiplyByTransposed(const Matrix3x3& matrix, const Matrix3x3& transpose);
 
 		/// <summary>
 		/// Adds the two matrices together on a per-element basis.
@@ -98,14 +98,14 @@ namespace BEPUik
 		/// <param name="a">First matrix to add.</param>
 		/// <param name="b">Second matrix to add.</param>
 		/// <param name="result">Sum of the two matrices.</param>
-		Matrix3x3 Add(const Matrix3x3 &a, const Matrix3x3 &b);
+		Matrix3x3 Add(const Matrix3x3& a, const Matrix3x3& b);
 
 		/// <summary>
 		/// Inverts the largest nonsingular submatrix in the matrix, excluding 2x2's that involve M13 or M31, and excluding 1x1's that include nondiagonal elements.
 		/// </summary>
 		/// <param name="matrix">Matrix to be inverted.</param>
 		/// <param name="result">Inverted matrix.</param>
-		Matrix3x3 AdaptiveInvert(const Matrix3x3 &matrix);
+		Matrix3x3 AdaptiveInvert(const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Transforms the vector by the matrix.
@@ -113,7 +113,7 @@ namespace BEPUik
 		/// <param name="v">Vector3 to transform.</param>
 		/// <param name="matrix">Matrix to use as the transformation.</param>
 		/// <param name="result">Product of the transformation.</param>
-		Vector3 Transform(const Vector3 &v, const Matrix3x3 &matrix);
+		Vector3 Transform(const Vector3& v, const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Transforms the vector by the matrix's transpose.
@@ -121,42 +121,42 @@ namespace BEPUik
 		/// <param name="v">Vector3 to transform.</param>
 		/// <param name="matrix">Matrix to use as the transformation transpose.</param>
 		/// <param name="result">Product of the transformation.</param>
-		Vector3 TransformTranspose(const Vector3 &v, const Matrix3x3 &matrix);
+		Vector3 TransformTranspose(const Vector3& v, const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Creates a skew symmetric matrix M from vector A such that M * B for some other vector B is equivalent to the cross product of A and B.
 		/// </summary>
 		/// <param name="v">Vector to base the matrix on.</param>
 		/// <param name="result">Skew-symmetric matrix result.</param>
-		Matrix3x3 CreateCrossProduct(const Vector3 &v);
+		Matrix3x3 CreateCrossProduct(const Vector3& v);
 
 		/// <summary>
 		/// Computes the transposed matrix of a matrix.
 		/// </summary>
 		/// <param name="matrix">Matrix to transpose.</param>
 		/// <param name="result">Transposed matrix.</param>
-		Matrix3x3 Transpose(const Matrix3x3 &matrix);
+		Matrix3x3 Transpose(const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Negates every element in the matrix.
 		/// </summary>
 		/// <param name="matrix">Matrix to negate.</param>
 		/// <param name="result">Negated matrix.</param>
-		Matrix3x3 Negate(const Matrix3x3 &matrix);
+		Matrix3x3 Negate(const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Inverts the given matix.
 		/// </summary>
 		/// <param name="matrix">Matrix to be inverted.</param>
 		/// <param name="result">Inverted matrix.</param>
-		Matrix3x3 Invert(const Matrix3x3 &matrix);
+		Matrix3x3 Invert(const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Creates a 3x3 matrix representing the orientation stored in the quaternion.
 		/// </summary>
 		/// <param name="quaternion">Quaternion to use to create a matrix.</param>
 		/// <param name="result">Matrix representing the quaternion's orientation.</param>
-		Matrix3x3 CreateFromQuaternion(const Quaternion &quaternion);
+		Matrix3x3 CreateFromQuaternion(const Quaternion& quaternion);
 
 		/// <summary>
 		/// Multiplies a transposed matrix with another matrix.
@@ -164,13 +164,13 @@ namespace BEPUik
 		/// <param name="matrix">Matrix to be multiplied.</param>
 		/// <param name="transpose">Matrix to be transposed and multiplied.</param>
 		/// <param name="result">Product of the multiplication.</param>
-		Matrix3x3 MultiplyTransposed(const Matrix3x3 &transpose, const Matrix3x3 &matrix);
+		Matrix3x3 MultiplyTransposed(const Matrix3x3& transpose, const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Calculates the determinant of the matrix.
 		/// </summary>
 		/// <returns>The matrix's determinant.</returns>
-		float Determinant(const Matrix3x3 &matrix);
+		float Determinant(const Matrix3x3& matrix);
 
 		/// <summary>
 		/// Calculates the determinant of largest nonsingular submatrix, excluding 2x2's that involve M13 or M31, and excluding all 1x1's that involve nondiagonal elements.
@@ -179,7 +179,7 @@ namespace BEPUik
 		/// 0 is the full 3x3.  1 is the upper left 2x2.  2 is the lower right 2x2.  3 is the four corners.
 		/// 4 is M11.  5 is M22.  6 is M33.</param>
 		/// <returns>The matrix's determinant.</returns>
-		float AdaptiveDeterminant(const Matrix3x3 &matrix,int &subMatrixCode);
+		float AdaptiveDeterminant(const Matrix3x3& matrix, int& subMatrixCode);
 	};
 
 	namespace vector3
@@ -198,7 +198,7 @@ namespace BEPUik
 		/// <param name="a">First vector to add.</param>
 		/// <param name="b">Second vector to add.</param>
 		/// <param name="sum">Sum of the two vectors.</param>
-		Vector3 Add(const Vector3 &a, const Vector3 &b);
+		Vector3 Add(const Vector3& a, const Vector3& b);
 
 		/// <summary>
 		/// Subtracts two vectors.
@@ -206,7 +206,7 @@ namespace BEPUik
 		/// <param name="a">Vector to subtract from.</param>
 		/// <param name="b">Vector to subtract from the first vector.</param>
 		/// <param name="difference">Result of the subtraction.</param>
-		Vector3 Subtract(const Vector3 &a, const Vector3 &b);
+		Vector3 Subtract(const Vector3& a, const Vector3& b);
 
 		/// <summary>
 		/// Scales a vector.
@@ -214,14 +214,14 @@ namespace BEPUik
 		/// <param name="v">Vector to scale.</param>
 		/// <param name="scale">Amount to scale.</param>
 		/// <param name="result">Scaled vector.</param>
-		Vector3 Multiply(const Vector3 &v, float scale);
+		Vector3 Multiply(const Vector3& v, float scale);
 
 		/// <summary>
 		/// Negates a vector.
 		/// </summary>
 		/// <param name="v">Vector to negate.</param>
 		/// <param name="negated">Negated vector.</param>
-		Vector3 Negate(const Vector3 &v);
+		Vector3 Negate(const Vector3& v);
 
 		/// <summary>
 		/// Computes the cross product between two vectors.
@@ -229,7 +229,7 @@ namespace BEPUik
 		/// <param name="a">First vector.</param>
 		/// <param name="b">Second vector.</param>
 		/// <param name="result">Cross product of the two vectors.</param>
-		Vector3 Cross(const Vector3 &a, const Vector3 &b);
+		Vector3 Cross(const Vector3& a, const Vector3& b);
 
 		/// <summary>
 		/// Computes the dot product of two vectors.
@@ -237,7 +237,7 @@ namespace BEPUik
 		/// <param name="a">First vector in the product.</param>
 		/// <param name="b">Second vector in the product.</param>
 		/// <param name="product">Resulting dot product.</param>
-		float Dot(const Vector3 &a, const Vector3 &b);
+		float Dot(const Vector3& a, const Vector3& b);
 
 		/// <summary>
 		/// Computes the distance between two two vectors.
@@ -245,7 +245,7 @@ namespace BEPUik
 		/// <param name="a">First vector.</param>
 		/// <param name="b">Second vector.</param>
 		/// <param name="distance">Distance between the two vectors.</param>
-		float Distance(const Vector3 &a, const Vector3 &b);
+		float Distance(const Vector3& a, const Vector3& b);
 
 		/// <summary>
 		/// Divides a vector's components by some amount.
@@ -253,14 +253,14 @@ namespace BEPUik
 		/// <param name="v">Vector to divide.</param>
 		/// <param name="divisor">Value to divide the vector's components.</param>
 		/// <param name="result">Result of the division.</param>
-		Vector3 Divide(const Vector3 &v, float divisor);
+		Vector3 Divide(const Vector3& v, float divisor);
 
 		/// <summary>
 		/// Normalizes the given vector.
 		/// </summary>
 		/// <param name="v">Vector to normalize.</param>
 		/// <param name="result">Normalized vector.</param>
-		void Normalize(Vector3 &v);
+		void Normalize(Vector3& v);
 
 		/// <summary>
 		/// Computes a vector with the maximum components of the given vectors.
@@ -268,10 +268,10 @@ namespace BEPUik
 		/// <param name="a">First vector.</param>
 		/// <param name="b">Second vector.</param>
 		/// <param name="result">Vector with the larger components of each input vector.</param>
-		Vector3 Max(const Vector3 &a, const Vector3 &b);
+		Vector3 Max(const Vector3& a, const Vector3& b);
 
-		float Length(const Vector3 &v);
-		float LengthSqr(const Vector3 &v);
+		float Length(const Vector3& v);
+		float LengthSqr(const Vector3& v);
 
 		/// <summary>
 		/// Vector pointing in the up direction.
@@ -286,12 +286,12 @@ namespace BEPUik
 		/// <summary>
 		/// Vector with all components equal to zero.
 		/// </summary>
-		const Vector3 Zero = Vector3(0,0,0);
+		const Vector3 Zero = Vector3(0, 0, 0);
 	};
 
 	namespace quaternion
 	{
-		Quaternion Create(float x,float y,float z,float w);
+		Quaternion Create(float x, float y, float z, float w);
 
 		/// <summary>
 		/// Transforms the vector using a quaternion.
@@ -299,14 +299,14 @@ namespace BEPUik
 		/// <param name="v">Vector to transform.</param>
 		/// <param name="rotation">Rotation to apply to the vector.</param>
 		/// <param name="result">Transformed vector.</param>
-		Vector3 Transform(const Vector3 &v, const Quaternion &rotation);
+		Vector3 Transform(const Vector3& v, const Quaternion& rotation);
 
 		/// <summary>
 		/// Computes the conjugate of the quaternion.
 		/// </summary>
 		/// <param name="quaternion">Quaternion to conjugate.</param>
 		/// <param name="result">Conjugated quaternion.</param>
-		Quaternion Conjugate(const Quaternion &quaternion);
+		Quaternion Conjugate(const Quaternion& quaternion);
 
 		/// <summary>
 		/// Multiplies two quaternions.
@@ -314,7 +314,7 @@ namespace BEPUik
 		/// <param name="a">First quaternion to multiply.</param>
 		/// <param name="b">Second quaternion to multiply.</param>
 		/// <param name="result">Product of the multiplication.</param>
-		Quaternion Multiply(const Quaternion &a, const Quaternion &b);
+		Quaternion Multiply(const Quaternion& a, const Quaternion& b);
 
 		/// <summary>
 		/// Computes the axis angle representation of a normalized quaternion.
@@ -322,7 +322,7 @@ namespace BEPUik
 		/// <param name="q">Quaternion to be converted.</param>
 		/// <param name="axis">Axis represented by the quaternion.</param>
 		/// <param name="angle">Angle around the axis represented by the quaternion.</param>
-		void GetAxisAngleFromQuaternion(const Quaternion &q, Vector3 &axis, float &angle);
+		void GetAxisAngleFromQuaternion(const Quaternion& q, Vector3& axis, float& angle);
 
 		/// <summary>
 		/// Multiplies two quaternions together in opposite order.
@@ -330,7 +330,7 @@ namespace BEPUik
 		/// <param name="a">First quaternion to multiply.</param>
 		/// <param name="b">Second quaternion to multiply.</param>
 		/// <param name="result">Product of the multiplication.</param>
-		Quaternion Concatenate(const Quaternion &a, const Quaternion &b);
+		Quaternion Concatenate(const Quaternion& a, const Quaternion& b);
 
 		/// <summary>
 		/// Computes the quaternion rotation between two normalized vectors.
@@ -338,12 +338,12 @@ namespace BEPUik
 		/// <param name="v1">First unit-length vector.</param>
 		/// <param name="v2">Second unit-length vector.</param>
 		/// <param name="q">Quaternion representing the rotation from v1 to v2.</param>
-		Quaternion GetQuaternionBetweenNormalizedVectors(const Vector3 &v1, const Vector3 &v2);
+		Quaternion GetQuaternionBetweenNormalizedVectors(const Vector3& v1, const Vector3& v2);
 
 		/// <summary>
 		/// Scales the quaternion such that it has unit length.
 		/// </summary>
-		void Normalize(Quaternion &q);
+		void Normalize(Quaternion& q);
 
 		/// <summary>
 		/// Adds two quaternions together.
@@ -351,8 +351,8 @@ namespace BEPUik
 		/// <param name="a">First quaternion to add.</param>
 		/// <param name="b">Second quaternion to add.</param>
 		/// <param name="result">Sum of the addition.</param>
-		Quaternion Add(const Quaternion &a, const Quaternion &b);
+		Quaternion Add(const Quaternion& a, const Quaternion& b);
 	};
 
-	const Quaternion quat_identity = quaternion::Create(1.f,0.f,0.f,0.f);
+	const Quaternion quat_identity = quaternion::Create(1.f, 0.f, 0.f, 0.f);
 };

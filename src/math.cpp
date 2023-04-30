@@ -61,7 +61,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::CreateScale(float scale)
 	return matrix;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::Multiply(const Matrix3x3 &a, const Matrix3x3 &b)
+BEPUik::Matrix3x3 BEPUik::matrix::Multiply(const Matrix3x3& a, const Matrix3x3& b)
 {
 	float resultM11 = a[0][0] * b[0][0] + a[0][1] * b[1][0] + a[0][2] * b[2][0];
 	float resultM12 = a[0][0] * b[0][1] + a[0][1] * b[1][1] + a[0][2] * b[2][1];
@@ -90,7 +90,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::Multiply(const Matrix3x3 &a, const Matrix3x3 &
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::MultiplyByTransposed(const Matrix3x3 &matrix, const Matrix3x3 &transpose)
+BEPUik::Matrix3x3 BEPUik::matrix::MultiplyByTransposed(const Matrix3x3& matrix, const Matrix3x3& transpose)
 {
 	float resultM11 = matrix[0][0] * transpose[0][0] + matrix[0][1] * transpose[0][1] + matrix[0][2] * transpose[0][2];
 	float resultM12 = matrix[0][0] * transpose[1][0] + matrix[0][1] * transpose[1][1] + matrix[0][2] * transpose[1][2];
@@ -119,7 +119,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::MultiplyByTransposed(const Matrix3x3 &matrix, 
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::Add(const Matrix3x3 &a, const Matrix3x3 &b)
+BEPUik::Matrix3x3 BEPUik::matrix::Add(const Matrix3x3& a, const Matrix3x3& b)
 {
 	float m11 = a[0][0] + b[0][0];
 	float m12 = a[0][1] + b[0][1];
@@ -148,10 +148,10 @@ BEPUik::Matrix3x3 BEPUik::matrix::Add(const Matrix3x3 &a, const Matrix3x3 &b)
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::AdaptiveInvert(const Matrix3x3 &matrix)
+BEPUik::Matrix3x3 BEPUik::matrix::AdaptiveInvert(const Matrix3x3& matrix)
 {
 	int submatrix;
-	float determinantInverse = 1 / AdaptiveDeterminant(matrix,submatrix);
+	float determinantInverse = 1 / AdaptiveDeterminant(matrix, submatrix);
 	float m11, m12, m13, m21, m22, m23, m31, m32, m33;
 	switch (submatrix)
 	{
@@ -266,7 +266,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::AdaptiveInvert(const Matrix3x3 &matrix)
 	return result;
 }
 
-BEPUik::Vector3 BEPUik::matrix::Transform(const Vector3 &v, const Matrix3x3 &matrix)
+BEPUik::Vector3 BEPUik::matrix::Transform(const Vector3& v, const Matrix3x3& matrix)
 {
 	float vX = v.x;
 	float vY = v.y;
@@ -279,7 +279,7 @@ BEPUik::Vector3 BEPUik::matrix::Transform(const Vector3 &v, const Matrix3x3 &mat
 	return result;
 }
 
-BEPUik::Vector3 BEPUik::matrix::TransformTranspose(const Vector3 &v, const Matrix3x3 &matrix)
+BEPUik::Vector3 BEPUik::matrix::TransformTranspose(const Vector3& v, const Matrix3x3& matrix)
 {
 	float vX = v.x;
 	float vY = v.y;
@@ -292,7 +292,7 @@ BEPUik::Vector3 BEPUik::matrix::TransformTranspose(const Vector3 &v, const Matri
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::CreateCrossProduct(const Vector3 &v)
+BEPUik::Matrix3x3 BEPUik::matrix::CreateCrossProduct(const Vector3& v)
 {
 	Matrix3x3 result;
 	result[0][0] = 0;
@@ -307,7 +307,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::CreateCrossProduct(const Vector3 &v)
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::Transpose(const Matrix3x3 &matrix)
+BEPUik::Matrix3x3 BEPUik::matrix::Transpose(const Matrix3x3& matrix)
 {
 	float m21 = matrix[0][1];
 	float m31 = matrix[0][2];
@@ -329,7 +329,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::Transpose(const Matrix3x3 &matrix)
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::Negate(const Matrix3x3 &matrix)
+BEPUik::Matrix3x3 BEPUik::matrix::Negate(const Matrix3x3& matrix)
 {
 	Matrix3x3 result;
 	result[0][0] = -matrix[0][0];
@@ -346,7 +346,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::Negate(const Matrix3x3 &matrix)
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::Invert(const Matrix3x3 &matrix)
+BEPUik::Matrix3x3 BEPUik::matrix::Invert(const Matrix3x3& matrix)
 {
 	float determinantInverse = 1 / Determinant(matrix);
 	float m11 = (matrix[1][1] * matrix[2][2] - matrix[1][2] * matrix[2][1]) * determinantInverse;
@@ -376,7 +376,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::Invert(const Matrix3x3 &matrix)
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::CreateFromQuaternion(const Quaternion &quaternion)
+BEPUik::Matrix3x3 BEPUik::matrix::CreateFromQuaternion(const Quaternion& quaternion)
 {
 	float XX = 2 * quaternion.x * quaternion.x;
 	float YY = 2 * quaternion.y * quaternion.y;
@@ -403,7 +403,7 @@ BEPUik::Matrix3x3 BEPUik::matrix::CreateFromQuaternion(const Quaternion &quatern
 	return result;
 }
 
-BEPUik::Matrix3x3 BEPUik::matrix::MultiplyTransposed(const Matrix3x3 &transpose, const Matrix3x3 &matrix)
+BEPUik::Matrix3x3 BEPUik::matrix::MultiplyTransposed(const Matrix3x3& transpose, const Matrix3x3& matrix)
 {
 	float resultM11 = transpose[0][0] * matrix[0][0] + transpose[1][0] * matrix[1][0] + transpose[2][0] * matrix[2][0];
 	float resultM12 = transpose[0][0] * matrix[0][1] + transpose[1][0] * matrix[1][1] + transpose[2][0] * matrix[2][1];
@@ -433,13 +433,13 @@ BEPUik::Matrix3x3 BEPUik::matrix::MultiplyTransposed(const Matrix3x3 &transpose,
 	return result;
 }
 
-float BEPUik::matrix::Determinant(const Matrix3x3 &matrix)
+float BEPUik::matrix::Determinant(const Matrix3x3& matrix)
 {
 	return matrix[0][0] * matrix[1][1] * matrix[2][2] + matrix[0][1] * matrix[1][2] * matrix[2][0] + matrix[0][2] * matrix[1][0] * matrix[2][1] -
 		matrix[2][0] * matrix[1][1] * matrix[0][2] - matrix[2][1] * matrix[1][2] * matrix[0][0] - matrix[2][2] * matrix[1][0] * matrix[0][1];
 }
 
-float BEPUik::matrix::AdaptiveDeterminant(const Matrix3x3 &matrix,int &subMatrixCode)
+float BEPUik::matrix::AdaptiveDeterminant(const Matrix3x3& matrix, int& subMatrixCode)
 {
 	//Try the full matrix first.
 	float determinant = matrix[0][0] * matrix[1][1] * matrix[2][2] + matrix[0][1] * matrix[1][2] * matrix[2][0] + matrix[0][2] * matrix[1][0] * matrix[2][1] -
@@ -497,45 +497,45 @@ float BEPUik::matrix::AdaptiveDeterminant(const Matrix3x3 &matrix,int &subMatrix
 
 BEPUik::Vector3 BEPUik::vector3::Create()
 {
-	return Vector3{0.f,0.f,0.f};
+	return Vector3{ 0.f,0.f,0.f };
 }
 
-BEPUik::Vector3 BEPUik::vector3::Add(const Vector3 &a, const Vector3 &b)
+BEPUik::Vector3 BEPUik::vector3::Add(const Vector3& a, const Vector3& b)
 {
-	return a +b;
+	return a + b;
 }
 
-BEPUik::Vector3 BEPUik::vector3::Subtract(const Vector3 &a, const Vector3 &b)
+BEPUik::Vector3 BEPUik::vector3::Subtract(const Vector3& a, const Vector3& b)
 {
-	return a -b;
+	return a - b;
 }
 
-BEPUik::Vector3 BEPUik::vector3::Multiply(const Vector3 &v, float scale)
+BEPUik::Vector3 BEPUik::vector3::Multiply(const Vector3& v, float scale)
 {
-	return v *scale;
+	return v * scale;
 }
 
-BEPUik::Vector3 BEPUik::vector3::Negate(const Vector3 &v)
+BEPUik::Vector3 BEPUik::vector3::Negate(const Vector3& v)
 {
 	return -v;
 }
 
-BEPUik::Vector3 BEPUik::vector3::Cross(const Vector3 &a, const Vector3 &b)
+BEPUik::Vector3 BEPUik::vector3::Cross(const Vector3& a, const Vector3& b)
 {
-	return glm::cross(a,b);
+	return glm::cross(a, b);
 }
 
-float BEPUik::vector3::Dot(const Vector3 &a, const Vector3 &b)
+float BEPUik::vector3::Dot(const Vector3& a, const Vector3& b)
 {
-	return glm::dot(a,b);
+	return glm::dot(a, b);
 }
 
-float BEPUik::vector3::Distance(const Vector3 &a, const Vector3 &b)
+float BEPUik::vector3::Distance(const Vector3& a, const Vector3& b)
 {
-	return glm::distance(a,b);
+	return glm::distance(a, b);
 }
 
-BEPUik::Vector3 BEPUik::vector3::Divide(const Vector3 &v, float divisor)
+BEPUik::Vector3 BEPUik::vector3::Divide(const Vector3& v, float divisor)
 {
 	Vector3 result;
 	float inverse = 1 / divisor;
@@ -545,16 +545,16 @@ BEPUik::Vector3 BEPUik::vector3::Divide(const Vector3 &v, float divisor)
 	return result;
 }
 
-void BEPUik::vector3::Normalize(Vector3 &v)
+void BEPUik::vector3::Normalize(Vector3& v)
 {
 	float inverse = (float)(1 / sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-	auto &result = v;
+	auto& result = v;
 	result.x = v.x * inverse;
 	result.y = v.y * inverse;
 	result.z = v.z * inverse;
 }
 
-BEPUik::Vector3 BEPUik::vector3::Max(const Vector3 &a, const Vector3 &b)
+BEPUik::Vector3 BEPUik::vector3::Max(const Vector3& a, const Vector3& b)
 {
 	Vector3 result;
 	result.x = a.x > b.x ? a.x : b.x;
@@ -563,17 +563,17 @@ BEPUik::Vector3 BEPUik::vector3::Max(const Vector3 &a, const Vector3 &b)
 	return result;
 }
 
-float BEPUik::vector3::Length(const Vector3 &v) {return glm::length(v);}
-float BEPUik::vector3::LengthSqr(const Vector3 &v) {return glm::length2(v);}
+float BEPUik::vector3::Length(const Vector3& v) { return glm::length(v); }
+float BEPUik::vector3::LengthSqr(const Vector3& v) { return glm::length2(v); }
 
 ///////////
 
-BEPUik::Quaternion BEPUik::quaternion::Create(float x,float y,float z,float w)
+BEPUik::Quaternion BEPUik::quaternion::Create(float x, float y, float z, float w)
 {
-	return Quaternion{w,x,y,z};
+	return Quaternion{ w,x,y,z };
 }
 
-BEPUik::Vector3 BEPUik::quaternion::Transform(const Vector3 &v, const Quaternion &rotation)
+BEPUik::Vector3 BEPUik::quaternion::Transform(const Vector3& v, const Quaternion& rotation)
 {
 	//This operation is an optimized-down version of v' = q * v * q^-1.
 	//The expanded form would be to treat v as an 'axis only' quaternion
@@ -602,7 +602,7 @@ BEPUik::Vector3 BEPUik::quaternion::Transform(const Vector3 &v, const Quaternion
 	return result;
 }
 
-BEPUik::Quaternion BEPUik::quaternion::Conjugate(const Quaternion &quaternion)
+BEPUik::Quaternion BEPUik::quaternion::Conjugate(const Quaternion& quaternion)
 {
 	Quaternion result;
 	result.x = -quaternion.x;
@@ -612,7 +612,7 @@ BEPUik::Quaternion BEPUik::quaternion::Conjugate(const Quaternion &quaternion)
 	return result;
 }
 
-BEPUik::Quaternion BEPUik::quaternion::Multiply(const Quaternion &a, const Quaternion &b)
+BEPUik::Quaternion BEPUik::quaternion::Multiply(const Quaternion& a, const Quaternion& b)
 {
 	float x = a.x;
 	float y = a.y;
@@ -630,7 +630,7 @@ BEPUik::Quaternion BEPUik::quaternion::Multiply(const Quaternion &a, const Quate
 	return result;
 }
 
-void BEPUik::quaternion::GetAxisAngleFromQuaternion(const Quaternion &q, Vector3 &axis, float &angle)
+void BEPUik::quaternion::GetAxisAngleFromQuaternion(const Quaternion& q, Vector3& axis, float& angle)
 {
 	float qx = q.x;
 	float qy = q.y;
@@ -658,7 +658,7 @@ void BEPUik::quaternion::GetAxisAngleFromQuaternion(const Quaternion &q, Vector3
 	}
 }
 
-BEPUik::Quaternion BEPUik::quaternion::Concatenate(const Quaternion &a, const Quaternion &b)
+BEPUik::Quaternion BEPUik::quaternion::Concatenate(const Quaternion& a, const Quaternion& b)
 {
 	float aX = a.x;
 	float aY = a.y;
@@ -676,7 +676,7 @@ BEPUik::Quaternion BEPUik::quaternion::Concatenate(const Quaternion &a, const Qu
 	return result;
 }
 
-BEPUik::Quaternion BEPUik::quaternion::GetQuaternionBetweenNormalizedVectors(const Vector3 &v1, const Vector3 &v2)
+BEPUik::Quaternion BEPUik::quaternion::GetQuaternionBetweenNormalizedVectors(const Vector3& v1, const Vector3& v2)
 {
 	float dot;
 	dot = vector3::Dot(v1, v2);
@@ -688,12 +688,12 @@ BEPUik::Quaternion BEPUik::quaternion::GetQuaternionBetweenNormalizedVectors(con
 	if (dot < -0.9999f) //parallel, opposing direction
 		q = Quaternion(0.f, -v1.z, v1.y, v1.x);
 	else
-		q = Quaternion(dot + 1,axis.x, axis.y, axis.z);
+		q = Quaternion(dot + 1, axis.x, axis.y, axis.z);
 	Normalize(q);
 	return q;
 }
 
-void BEPUik::quaternion::Normalize(Quaternion &q)
+void BEPUik::quaternion::Normalize(Quaternion& q)
 {
 	float inverse = (float)(1 / std::sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w));
 	q.x *= inverse;
@@ -702,7 +702,7 @@ void BEPUik::quaternion::Normalize(Quaternion &q)
 	q.w *= inverse;
 }
 
-BEPUik::Quaternion BEPUik::quaternion::Add(const Quaternion &a, const Quaternion &b)
+BEPUik::Quaternion BEPUik::quaternion::Add(const Quaternion& a, const Quaternion& b)
 {
 	Quaternion result;
 	result.x = a.x + b.x;
