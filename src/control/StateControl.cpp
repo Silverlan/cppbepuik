@@ -18,70 +18,73 @@
 #include "bepuik/SingleBoneAngularMotor.hpp"
 
 BEPUik::StateControl::~StateControl() {}
-BEPUik::Bone *BEPUik::StateControl::GetTargetBone() {return LinearMotor->TargetBone;}
+BEPUik::Bone* BEPUik::StateControl::GetTargetBone() { return LinearMotor->TargetBone; }
 
-void BEPUik::StateControl::SetTargetBone(Bone *value)
+void BEPUik::StateControl::SetTargetBone(Bone* value)
 {
-    LinearMotor->SetTargetBone(value);
-    AngularMotor->SetTargetBone(value);
-    if (value != nullptr)
-        AngularMotor->TargetOrientation = value->Orientation;
+	LinearMotor->SetTargetBone(value);
+	AngularMotor->SetTargetBone(value);
+	if (value != nullptr)
+		AngularMotor->TargetOrientation = value->Orientation;
 }
 
-BEPUik::SingleBoneLinearMotor *BEPUik::StateControl::GetLinearMotor() {return LinearMotor.get();}
-void BEPUik::StateControl::SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value) {LinearMotor = std::move(value);}
+BEPUik::SingleBoneLinearMotor* BEPUik::StateControl::GetLinearMotor() { return LinearMotor.get(); }
+void BEPUik::StateControl::SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value) { LinearMotor = std::move(value); }
 
-BEPUik::SingleBoneAngularMotor *BEPUik::StateControl::GetAngularMotor() {return AngularMotor.get();}
-void BEPUik::StateControl::SetAngularMotor(std::unique_ptr<SingleBoneAngularMotor> value) {AngularMotor = std::move(value);}
+BEPUik::SingleBoneAngularMotor* BEPUik::StateControl::GetAngularMotor() { return AngularMotor.get(); }
+void BEPUik::StateControl::SetAngularMotor(std::unique_ptr<SingleBoneAngularMotor> value) { AngularMotor = std::move(value); }
 
 BEPUik::StateControl::StateControl()
 {
-    LinearMotor = std::make_unique<SingleBoneLinearMotor>();
-    AngularMotor = std::make_unique<SingleBoneAngularMotor>();
-    LinearMotor->Rigidity = 1;
-    AngularMotor->Rigidity = 1;
+	LinearMotor = std::make_unique<SingleBoneLinearMotor>();
+	AngularMotor = std::make_unique<SingleBoneAngularMotor>();
+	LinearMotor->Rigidity = 1;
+	AngularMotor->Rigidity = 1;
 }
 
 void BEPUik::StateControl::Preupdate(float dt, float updateRate)
 {
-    LinearMotor->Preupdate(dt, updateRate);
-    AngularMotor->Preupdate(dt, updateRate);
+	LinearMotor->Preupdate(dt, updateRate);
+	AngularMotor->Preupdate(dt, updateRate);
 }
 
 
 void BEPUik::StateControl::UpdateJacobiansAndVelocityBias()
 {
-    LinearMotor->UpdateJacobiansAndVelocityBias();
-    AngularMotor->UpdateJacobiansAndVelocityBias();
+	LinearMotor->UpdateJacobiansAndVelocityBias();
+	AngularMotor->UpdateJacobiansAndVelocityBias();
 }
 
 void BEPUik::StateControl::ComputeEffectiveMass()
 {
-    LinearMotor->ComputeEffectiveMass();
-    AngularMotor->ComputeEffectiveMass();
+	LinearMotor->ComputeEffectiveMass();
+	AngularMotor->ComputeEffectiveMass();
 }
 
 void BEPUik::StateControl::WarmStart()
 {
-    LinearMotor->WarmStart();
-    AngularMotor->WarmStart();
+	LinearMotor->WarmStart();
+	AngularMotor->WarmStart();
 }
 
 void BEPUik::StateControl::SolveVelocityIteration()
 {
-    LinearMotor->SolveVelocityIteration();
-    AngularMotor->SolveVelocityIteration();
+	LinearMotor->SolveVelocityIteration();
+	AngularMotor->SolveVelocityIteration();
 }
 
 void BEPUik::StateControl::ClearAccumulatedImpulses()
 {
-    LinearMotor->ClearAccumulatedImpulses();
-    AngularMotor->ClearAccumulatedImpulses();
+	LinearMotor->ClearAccumulatedImpulses();
+	AngularMotor->ClearAccumulatedImpulses();
 }
 
-float BEPUik::StateControl::GetMaximumForce() const {return LinearMotor->MaximumForce;}
+float BEPUik::StateControl::GetMaximumForce() const { return LinearMotor->MaximumForce; }
 void BEPUik::StateControl::SetMaximumForce(float value)
 {
-    LinearMotor->MaximumForce = value;
-    AngularMotor->MaximumForce = value;
+	LinearMotor->MaximumForce = value;
+	AngularMotor->MaximumForce = value;
 }
+
+float BEPUik::StateControl::GetRigidity() const { return LinearMotor->GetRigidity(); }
+void BEPUik::StateControl::SetRigidity(float rigidity) { LinearMotor->SetRigidity(rigidity); AngularMotor->SetRigidity(rigidity); }

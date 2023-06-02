@@ -57,5 +57,8 @@ namespace BEPUik
 
         virtual float GetMaximumForce() const override;
 		virtual void SetMaximumForce(float value) override;
+
+		virtual float GetRigidity() const override;
+		virtual void SetRigidity(float rigidity) override;
     };
 }

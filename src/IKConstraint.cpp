@@ -38,5 +38,4 @@ void BEPUik::IKConstraint::Preupdate(float dt, float updateRate)
     softness = updateRate * multiplier;
     MaximumImpulse = MaximumForce * dt;
     MaximumImpulseSquared = std::min(std::numeric_limits<float>::max(), MaximumImpulse * MaximumImpulse);
-
 }

@@ -19,38 +19,41 @@
 
 namespace BEPUik
 {
-    /// <summary>
-    /// Constrains an individual bone in an attempt to reach some goal.
-    /// Controls act as groups of single bone constraints. They are used
-    /// by the solver to determine the active set of body constraints.
-    /// </summary>
-    class Control
-    {
+	/// <summary>
+	/// Constrains an individual bone in an attempt to reach some goal.
+	/// Controls act as groups of single bone constraints. They are used
+	/// by the solver to determine the active set of body constraints.
+	/// </summary>
+	class Control
+	{
 	public:
-		Control()=default;
-		Control(const Control*)=delete;
-		Control &operator=(const Control&)=delete;
+		Control() = default;
+		Control(const Control*) = delete;
+		Control& operator=(const Control&) = delete;
 		virtual ~Control() {}
-        /// <summary>
-        /// Gets or sets the controlled bone.
-        /// </summary>
-        virtual Bone *GetTargetBone()=0;
-		virtual void SetTargetBone(Bone *bone)=0;
+		/// <summary>
+		/// Gets or sets the controlled bone.
+		/// </summary>
+		virtual Bone* GetTargetBone() = 0;
+		virtual void SetTargetBone(Bone* bone) = 0;
 
-        virtual void Preupdate(float dt, float updateRate)=0;
+		virtual void Preupdate(float dt, float updateRate) = 0;
 
-        virtual void UpdateJacobiansAndVelocityBias()=0;
+		virtual void UpdateJacobiansAndVelocityBias() = 0;
 
-        virtual void ComputeEffectiveMass()=0;
+		virtual void ComputeEffectiveMass() = 0;
 
-        virtual void WarmStart()=0;
+		virtual void WarmStart() = 0;
 
-        virtual void SolveVelocityIteration()=0;
+		virtual void SolveVelocityIteration() = 0;
 
-        virtual void ClearAccumulatedImpulses()=0;
+		virtual void ClearAccumulatedImpulses() = 0;
 
-        virtual float GetMaximumForce() const=0;
+		virtual float GetMaximumForce() const = 0;
 
-        virtual void SetMaximumForce(float value)=0;
-    };
+		virtual void SetMaximumForce(float value) = 0;
+
+		virtual float GetRigidity() const { return 0.f; };
+		virtual void SetRigidity(float rigidity) {}
+	};
 }

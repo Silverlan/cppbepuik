@@ -18,50 +18,53 @@
 
 BEPUik::DragControl::~DragControl()
 {}
-BEPUik::Bone *BEPUik::DragControl::GetTargetBone() { return LinearMotor->TargetBone; }
-void BEPUik::DragControl::SetTargetBone(Bone *value)
+BEPUik::Bone* BEPUik::DragControl::GetTargetBone() { return LinearMotor->TargetBone; }
+void BEPUik::DragControl::SetTargetBone(Bone* value)
 {
-    LinearMotor->TargetBone = value;
+	LinearMotor->TargetBone = value;
 }
 
-BEPUik::SingleBoneLinearMotor *BEPUik::DragControl::GetLinearMotor() {return LinearMotor.get();}
-void BEPUik::DragControl::SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value) {LinearMotor = std::move(value);}
+BEPUik::SingleBoneLinearMotor* BEPUik::DragControl::GetLinearMotor() { return LinearMotor.get(); }
+void BEPUik::DragControl::SetLinearMotor(std::unique_ptr<SingleBoneLinearMotor> value) { LinearMotor = std::move(value); }
 
 BEPUik::DragControl::DragControl()
 {
-    LinearMotor = std::make_unique<SingleBoneLinearMotor>();
-    LinearMotor->Rigidity = 1;
+	LinearMotor = std::make_unique<SingleBoneLinearMotor>();
+	LinearMotor->Rigidity = 1;
 }
 
 void BEPUik::DragControl::Preupdate(float dt, float updateRate)
 {
-    LinearMotor->Preupdate(dt, updateRate);
+	LinearMotor->Preupdate(dt, updateRate);
 }
 
 void BEPUik::DragControl::UpdateJacobiansAndVelocityBias()
 {
-    LinearMotor->UpdateJacobiansAndVelocityBias();
+	LinearMotor->UpdateJacobiansAndVelocityBias();
 }
 
 void BEPUik::DragControl::ComputeEffectiveMass()
 {
-    LinearMotor->ComputeEffectiveMass();
+	LinearMotor->ComputeEffectiveMass();
 }
 
 void BEPUik::DragControl::WarmStart()
 {
-    LinearMotor->WarmStart();
+	LinearMotor->WarmStart();
 }
 
 void BEPUik::DragControl::SolveVelocityIteration()
 {
-    LinearMotor->SolveVelocityIteration();
+	LinearMotor->SolveVelocityIteration();
 }
 
 void BEPUik::DragControl::ClearAccumulatedImpulses()
 {
-    LinearMotor->ClearAccumulatedImpulses();
+	LinearMotor->ClearAccumulatedImpulses();
 }
 
 float BEPUik::DragControl::GetMaximumForce() const { return LinearMotor->MaximumForce; }
-void BEPUik::DragControl::SetMaximumForce(float value) {LinearMotor->MaximumForce = value;}
+void BEPUik::DragControl::SetMaximumForce(float value) { LinearMotor->MaximumForce = value; }
+
+float BEPUik::DragControl::GetRigidity() const { return LinearMotor->GetRigidity(); }
+void BEPUik::DragControl::SetRigidity(float rigidity) { LinearMotor->SetRigidity(rigidity); }
