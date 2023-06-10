@@ -19,87 +19,10 @@
 
 namespace BEPUik
 {
-    /// <summary>
-    /// Prevents two bones from rotating beyond a certain angle away from each other as measured by attaching an axis to each connected bone.
-    /// </summary>
-    class IKEllipseSwingLimit : public IKLimit
-    {
-	public:
-        /// <summary>
-        /// Gets or sets the axis attached to ConnectionA in its local space.
-        /// </summary>
-        Vector3 LocalAxisA;
-        /// <summary>
-        /// Gets or sets the axis attached to ConnectionB in its local space.
-        /// </summary>
-        Vector3 LocalAxisB;
-
-		Vector3 LocalXAxis;
-		Vector3 LocalAxisBRelToA;
-
-        /// <summary>
-        /// Gets or sets the axis attached to ConnectionA in world space.
-        /// </summary>
-        Vector3 GetAxisA() const;
-        void SetAxisA(const Vector3 &value);
-
-        /// <summary>
-        ///  Gets or sets the axis attached to ConnectionB in world space.
-        /// </summary>
-        Vector3 GetAxisB() const;
-        void SetAxisB(const Vector3 &value);
-
-		/// <summary>
-		/// Gets the maximum angle between the two axes allowed by the constraint.
-		/// </summary>
-		float GetMaximumAngleX();
-
-		/// <summary>
-		/// Sets the maximum angle between the two axes allowed by the constraint.
-		/// </summary>
-		void SetMaximumAngleX(float angle);
-
-		/// <summary>
-		/// Gets the maximum angle between the two axes allowed by the constraint.
-		/// </summary>
-		float GetMaximumAngleY();
-
-		/// <summary>
-		/// Sets the maximum angle between the two axes allowed by the constraint.
-		/// </summary>
-		void SetMaximumAngleY(float angle);
-
-		/// <summary>
-		/// Gets the axis attached to connection B in world space.
-		/// </summary>
-		Vector3 GetXAxis() const;
-
-		/// <summary>
-		/// Sets the axis attached to connection B in world space.
-		/// </summary>
-		void SetXAxis(const Vector3 &axis);
-
-        /// <summary>
-        /// Builds a new swing limit. Prevents two bones from rotating beyond a certain angle away from each other as measured by attaching an axis to each connected bone.
-        /// </summary>
-        /// <param name="connectionA">First connection of the limit.</param>
-        /// <param name="connectionB">Second connection of the limit.</param>
-        /// <param name="axisA">Axis attached to connectionA in world space.</param>
-        /// <param name="axisB">Axis attached to connectionB in world space.</param>
-        /// <param name="maximumAngle">Maximum angle allowed between connectionA's axis and connectionB's axis.</param>
-        IKEllipseSwingLimit(Bone &connectionA, Bone &connectionB, const Vector3 &axisA, const Vector3 &axisB, const Vector3 &xAxis, float maximumAngleX, float maximumAngleY);
-
-        virtual void UpdateJacobiansAndVelocityBias() override;
-
-	private:
-		float maximumAngleX;
-		float maximumAngleY;
-    };
-
 	/// <summary>
 	/// Prevents two bones from rotating beyond a certain angle away from each other as measured by attaching an axis to each connected bone.
 	/// </summary>
-	class IKEllipseSwingLimit2 : public IKLimit
+	class IKEllipseSwingLimit : public IKLimit
 	{
 	public:
 		/// <summary>
@@ -166,14 +89,14 @@ namespace BEPUik
 		/// <param name="axisA">Axis attached to connectionA in world space.</param>
 		/// <param name="axisB">Axis attached to connectionB in world space.</param>
 		/// <param name="maximumAngle">Maximum angle allowed between connectionA's axis and connectionB's axis.</param>
-		IKEllipseSwingLimit2(Bone& connectionA, Bone& connectionB, const Vector3& axisA, const Vector3& axisB, float maximumAngleX, float maximumAngleY);
+		IKEllipseSwingLimit(Bone& connectionA, Bone& connectionB, const Vector3& axisA, const Vector3& axisB, float maximumAngleX, float maximumAngleY);
 
 		virtual void UpdateJacobiansAndVelocityBias() override;
 
 	private:
 		float maximumAngleX;
 		float maximumAngleY;
-		Vector3 testXAxis;
-		Vector3 testYAxis;
+		Vector3 xAxis;
+		Vector3 yAxis;
 	};
 }

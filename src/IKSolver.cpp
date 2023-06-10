@@ -100,7 +100,7 @@ void BEPUik::IKSolver::Solve(std::vector<Control*> &controls)
     {
         control->Preupdate(GetTimeStepDuration(), updateRate);
     }
-
+	
     //Go through the set of controls and active joints, updating the state of bones.
     for (int i = 0; i < ControlIterationCount; i++)
     {
