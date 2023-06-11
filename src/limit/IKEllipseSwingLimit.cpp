@@ -69,7 +69,6 @@ BEPUik::IKEllipseSwingLimit::IKEllipseSwingLimit(Bone& connectionA, Bone& connec
 	SetupJointTransforms(axisB);
 }
 
-/// <param name="twistAxis">Axis around which rotation is allowed.</param>
 void BEPUik::IKEllipseSwingLimit::SetupJointTransforms(const Vector3& twistAxis)
 {
 	//Compute a vector which is perpendicular to the axis.  It'll be added in local space to both connections.
@@ -80,7 +79,6 @@ void BEPUik::IKEllipseSwingLimit::SetupJointTransforms(const Vector3& twistAxis)
 	if (length < Epsilon)
 		xAxis = vector3::Cross(twistAxis, RightVector);
 
-	Vector3 yAxis;
 	yAxis = vector3::Cross(twistAxis, xAxis);
 
 	//Put the axes into the joint transform of A.
@@ -125,7 +123,9 @@ void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
 
 	auto basisYAxis = yAxis;
 	basisYAxis = glm::rotate(m_connectionA->Orientation, basisYAxis);
+	//basis.rotationMatrix = connectionA.orientationMatrix;
 
+	//Compute the individual swing angles.
 	angleX = vector3::Dot(axisAngle, basisXAxis);
 	angleY = vector3::Dot(axisAngle, basisYAxis);
 
@@ -133,8 +133,6 @@ void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
 	float maxAngleXSquared = maximumAngleX * maximumAngleX;
 	float maxAngleYSquared = maximumAngleY * maximumAngleY;
 	error = angleX * angleX * maxAngleYSquared + angleY * angleY * maxAngleXSquared - maxAngleXSquared * maxAngleYSquared;
-
-	auto maximumAngle = maximumAngleX;
 
 	//One angular DOF is constrained by this limit.
 	Vector3 hingeAxis;
@@ -152,11 +150,11 @@ void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
 	//Note how we've computed the jacobians despite the limit being potentially inactive.
 	//This is to enable 'speculative' limits.
 	if (error >= 0.f) {
-		velocityBias = Vector3(errorCorrectionFactor * error, 0.f, 0.f);
+		velocityBias = Vector3(errorCorrectionFactor *error,0.f,0.f);
 	}
 	else {
 		//The constraint is not yet violated. But, it may be- allow only as much motion as could occur withviolating the constraint.
 		//Limits can't 'pull,' so this will not result in erroneous sticking.
-		velocityBias = Vector3(error, 0.f, 0.f);
+		velocityBias = Vector3(error,0.f,0.f);
 	}
 }
