@@ -68,3 +68,12 @@ void BEPUik::DragControl::SetMaximumForce(float value) { LinearMotor->MaximumFor
 
 float BEPUik::DragControl::GetRigidity() const { return LinearMotor->GetRigidity(); }
 void BEPUik::DragControl::SetRigidity(float rigidity) { LinearMotor->SetRigidity(rigidity); }
+
+void BEPUik::OrientedDragControl::SetTargetOrientation(const Quaternion& orientation) { m_targetOrientation = orientation; }
+const BEPUik::Quaternion& BEPUik::OrientedDragControl::GetTargetOrientation() const { return m_targetOrientation; }
+
+void BEPUik::OrientedDragControl::ClearAccumulatedImpulses()
+{
+	DragControl::ClearAccumulatedImpulses();
+	GetTargetBone()->Orientation = m_targetOrientation;
+}
