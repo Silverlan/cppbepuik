@@ -20,6 +20,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtx/norm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/rotate_vector.hpp>
 
 namespace BEPUik
 {
@@ -52,6 +53,9 @@ namespace BEPUik
 	/// Approximate value of Pi divided by four.
 	/// </summary>
 	constexpr float PiOver4 = 0.785398163397448310f;
+
+	float lerp(float x, float y, float f);
+	Vector2 ellipse_line_intersection(float rx, float ry, Vector2 p2);
 
 	namespace matrix
 	{
@@ -182,6 +186,11 @@ namespace BEPUik
 		float AdaptiveDeterminant(const Matrix3x3& matrix, int& subMatrixCode);
 	};
 
+	namespace vector2
+	{
+		float Length(const Vector2& v);
+	};
+
 	namespace vector3
 	{
 		/// <summary>
@@ -273,6 +282,8 @@ namespace BEPUik
 		float Length(const Vector3& v);
 		float LengthSqr(const Vector3& v);
 
+		Vector3 Rotate(const Quaternion& rot, const Vector3& v);
+
 		/// <summary>
 		/// Vector pointing in the up direction.
 		/// </summary>
@@ -352,6 +363,8 @@ namespace BEPUik
 		/// <param name="b">Second quaternion to add.</param>
 		/// <param name="result">Sum of the addition.</param>
 		Quaternion Add(const Quaternion& a, const Quaternion& b);
+
+		Quaternion Inverse(const Quaternion& quaternion);
 	};
 
 	const Quaternion quat_identity = quaternion::Create(1.f, 0.f, 0.f, 0.f);

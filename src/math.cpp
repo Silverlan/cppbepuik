@@ -15,12 +15,43 @@
 
 #include "bepuik/math.hpp"
 
+float BEPUik::lerp(float x, float y, float f)
+{
+	return x + (y - x) * f;
+}
+
+BEPUik::Vector2 BEPUik::ellipse_line_intersection(float rx, float ry, Vector2 p2)
+{
+	Vector2 p3;
+
+	// If p1.x equals p2.x, then line is vertical
+	const Vector2 p1{ 0.f, 0.f };
+	if (abs(p2.x - p1.x) < 0.0001f)
+	{
+		p3.x = p2.x;
+		p3.y = ry;
+	}
+	else {
+		float s = (p2.y - p1.y) / (p2.x - p1.x);
+		float si = p2.y - (s * p2.x);
+		float a = (ry * ry) + (rx * rx * s * s);
+		float b = 2.f * rx * rx * si * s;
+		float c = rx * rx * si * si - rx * rx * ry * ry;
+
+		float radicand_sqrt = sqrt((b * b) - (4.f * a * c));
+		p3.x = (-b - radicand_sqrt) / (2.f * a);
+		p3.y = s * p3.x + si;
+	}
+
+	return p3;
+}
+
 BEPUik::Matrix3x3 BEPUik::matrix::Create(float value)
 {
 	return BEPUik::Matrix3x3{
-		value,0.f,0.f,
-		0.f,value,0.f,
-		0.f,0.f,value
+		value, 0.f, 0.f,
+			0.f, value, 0.f,
+			0.f, 0.f, value
 	};
 }
 
@@ -495,6 +526,10 @@ float BEPUik::matrix::AdaptiveDeterminant(const Matrix3x3& matrix, int& subMatri
 
 ///////////
 
+float BEPUik::vector2::Length(const Vector2& v) { return glm::length(v); }
+
+///////////
+
 BEPUik::Vector3 BEPUik::vector3::Create()
 {
 	return Vector3{ 0.f,0.f,0.f };
@@ -565,6 +600,11 @@ BEPUik::Vector3 BEPUik::vector3::Max(const Vector3& a, const Vector3& b)
 
 float BEPUik::vector3::Length(const Vector3& v) { return glm::length(v); }
 float BEPUik::vector3::LengthSqr(const Vector3& v) { return glm::length2(v); }
+
+BEPUik::Vector3 BEPUik::vector3::Rotate(const Quaternion& rot, const Vector3& v)
+{
+	return glm::rotate(rot, v);
+}
 
 ///////////
 
@@ -710,4 +750,9 @@ BEPUik::Quaternion BEPUik::quaternion::Add(const Quaternion& a, const Quaternion
 	result.z = a.z + b.z;
 	result.w = a.w + b.w;
 	return result;
+}
+
+BEPUik::Quaternion BEPUik::quaternion::Inverse(const Quaternion& quaternion)
+{
+	return glm::inverse(quaternion);
 }
