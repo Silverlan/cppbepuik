@@ -91,6 +91,8 @@ namespace BEPUik
 		/// <param name="maximumAngle">Maximum angle allowed between connectionA's axis and connectionB's axis.</param>
 		IKEllipseSwingLimit(Bone& connectionA, Bone& connectionB, const Vector3& axisA, const Vector3& axisB, float maximumAngleX, float maximumAngleY);
 
+		IKEllipseSwingLimit(Bone& connectionA, Bone& connectionB, const Vector3& axisA, const Vector3& axisB, const Vector3 &axisBRight, const Vector3 &axisBUp, float maximumAngleX, float maximumAngleY);
+
 		virtual void UpdateJacobiansAndVelocityBias() override;
 
 	private:

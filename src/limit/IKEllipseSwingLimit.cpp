@@ -69,6 +69,24 @@ BEPUik::IKEllipseSwingLimit::IKEllipseSwingLimit(Bone& connectionA, Bone& connec
 	SetupJointTransforms(axisB);
 }
 
+BEPUik::IKEllipseSwingLimit::IKEllipseSwingLimit(Bone& connectionA, Bone& connectionB, const Vector3& axisA, const Vector3& axisB, const Vector3& axisBRight, const Vector3& axisBUp, float maximumAngleX, float maximumAngleY)
+	: IKLimit(connectionA, connectionB)
+{
+	SetAxisA(axisA);
+	SetAxisB(axisB);
+
+	// TODO: Why are these inverted?
+	SetMaximumAngleX(maximumAngleY);
+	SetMaximumAngleY(maximumAngleX);
+
+	xAxis = axisBRight;
+	yAxis = axisBUp;
+	vector3::Normalize(xAxis);
+	vector3::Normalize(yAxis);
+	xAxis = vector3::Rotate(quaternion::Inverse(m_connectionA->Orientation), xAxis);
+	yAxis = vector3::Rotate(quaternion::Inverse(m_connectionA->Orientation), yAxis);
+}
+
 void BEPUik::IKEllipseSwingLimit::SetupJointTransforms(const Vector3& twistAxis)
 {
 	//Compute a vector which is perpendicular to the axis.  It'll be added in local space to both connections.
@@ -84,8 +102,8 @@ void BEPUik::IKEllipseSwingLimit::SetupJointTransforms(const Vector3& twistAxis)
 	//Put the axes into the joint transform of A.
 	vector3::Normalize(xAxis);
 	vector3::Normalize(yAxis);
-	xAxis = glm::rotate(glm::inverse(m_connectionA->Orientation), xAxis);
-	yAxis = glm::rotate(glm::inverse(m_connectionA->Orientation), yAxis);
+	xAxis = vector3::Rotate(quaternion::Inverse(m_connectionA->Orientation), xAxis);
+	yAxis = vector3::Rotate(quaternion::Inverse(m_connectionA->Orientation), yAxis);
 }
 
 void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
@@ -99,9 +117,6 @@ void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
 	axisA = quaternion::Transform(LocalAxisA, m_connectionA->Orientation);
 	axisB = quaternion::Transform(LocalAxisB, m_connectionB->Orientation);
 
-	float angleX;
-	float angleY;
-	float error;
 	auto worldTwistAxisB = axisB;
 	auto primaryAxis = axisA;
 	auto relativeRotation = quaternion::GetQuaternionBetweenNormalizedVectors(worldTwistAxisB, primaryAxis);
@@ -119,20 +134,19 @@ void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
 	axisAngle.z = axis.z * angle;
 
 	auto basisXAxis = xAxis;
-	basisXAxis = glm::rotate(m_connectionA->Orientation, basisXAxis);
+	basisXAxis = vector3::Rotate(m_connectionA->Orientation, basisXAxis);
 
 	auto basisYAxis = yAxis;
-	basisYAxis = glm::rotate(m_connectionA->Orientation, basisYAxis);
+	basisYAxis = vector3::Rotate(m_connectionA->Orientation, basisYAxis);
 	//basis.rotationMatrix = connectionA.orientationMatrix;
 
 	//Compute the individual swing angles.
-	angleX = vector3::Dot(axisAngle, basisXAxis);
-	angleY = vector3::Dot(axisAngle, basisYAxis);
+	auto angleX = vector3::Dot(axisAngle, basisXAxis);
+	auto angleY = vector3::Dot(axisAngle, basisYAxis);
 
 	//The position constraint states that the angles must be within an ellipse. The following is just a reorganization of the x^2 / a^2 + y^2 / b^2 <= 1 definition of an ellipse's area.
 	float maxAngleXSquared = maximumAngleX * maximumAngleX;
 	float maxAngleYSquared = maximumAngleY * maximumAngleY;
-	error = angleX * angleX * maxAngleYSquared + angleY * angleY * maxAngleXSquared - maxAngleXSquared * maxAngleYSquared;
 
 	//One angular DOF is constrained by this limit.
 	Vector3 hingeAxis;
@@ -149,12 +163,19 @@ void BEPUik::IKEllipseSwingLimit::UpdateJacobiansAndVelocityBias()
 
 	//Note how we've computed the jacobians despite the limit being potentially inactive.
 	//This is to enable 'speculative' limits.
-	if (error >= 0.f) {
-		velocityBias = Vector3(errorCorrectionFactor *error,0.f,0.f);
+
+	// Convert our x- and y-angles to a single angle value, depending on the position in the ellipsis
+	auto effectiveAngle = vector2::Length(Vector2(angleX, angleY));
+	auto p = ellipse_line_intersection(abs(maximumAngleX), abs(maximumAngleY), Vector2(angleX, angleY));
+	auto effectiveMaximumAngle = vector2::Length(p);
+	if (effectiveAngle >= effectiveMaximumAngle)
+	{
+		velocityBias = Vector3(errorCorrectionFactor * (effectiveAngle - effectiveMaximumAngle), 0, 0);
 	}
-	else {
+	else
+	{
 		//The constraint is not yet violated. But, it may be- allow only as much motion as could occur withviolating the constraint.
 		//Limits can't 'pull,' so this will not result in erroneous sticking.
-		velocityBias = Vector3(error,0.f,0.f);
+		velocityBias = Vector3(effectiveAngle - effectiveMaximumAngle, 0, 0);
 	}
 }
